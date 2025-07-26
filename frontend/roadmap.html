@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap de Projetos - ProjectFlow</title>
+    <!-- Google Fonts, Font Awesome, CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+        <!-- Eruda (opcional, para debug) -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+
+    <!-- Biblioteca Frappe Gantt -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css">
+    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.min.js"></script>
+</head>
+<body>
+    <div id="main-header-placeholder"></div>
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-road"></i> Roadmap de Projetos</h1>
+                <p>Visão cronológica do portfólio de projetos.</p>
+            </div>
+
+            <div class="details-panel">
+                <div class="panel-header">
+                    <h2>Linha do Tempo</h2>
+                    <div class="gantt-controls">
+                        <div class="gantt-zoom-toggle">
+                            <button class="zoom-btn" data-view-mode="Week">Semana</button>
+                            <button class="zoom-btn active" data-view-mode="Month">Mês</button>
+                            <button class="zoom-btn" data-view-mode="Year">Ano</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="roadmap-container" class="gantt-container">
+                    <!-- O gráfico do roadmap será inserido aqui -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- ... (placeholders e scripts) ... -->
+        <!-- Componentes de UI Globais que serão carregados dinamicamente -->
+    <div id="toast-container"></div>
+    <div id="modal-placeholder"></div> <!-- Placeholder para o modal -->
+     <script src="js/layout-loader.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

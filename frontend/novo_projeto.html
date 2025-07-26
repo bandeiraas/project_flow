@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Projeto</title>
+    
+    <!-- Google Fonts, Font Awesome, CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+
+    <!-- Eruda (opcional, para debug) -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</head>
+<body>
+
+    <!-- Placeholder para o cabeçalho -->
+    <div id="main-header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="container">
+            <h1><i class="fas fa-plus-circle"></i> Criar Novo Projeto</h1>
+            
+            <form id="form-novo-projeto" class="form-container">
+                <!-- O conteúdo do formulário será inserido aqui pelo novo_projeto.js -->
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="window.location.href='index.html'">Cancelar</button>
+                    <button type="submit" class="btn-primary">
+                        <span class="btn-text">Salvar Projeto</span>
+                        <div class="loader-small" style="display: none;"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- --- CORREÇÃO AQUI --- -->
+    <!-- Componentes de UI Globais -->
+    <div id="toast-container"></div>
+    <div id="modal-placeholder"></div> <!-- Placeholder para o modal -->
+
+    <!-- Scripts -->
+    <script src="js/layout-loader.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

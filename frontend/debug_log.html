@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Log de Depuração</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 1rem; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+        .log-entry { border-bottom: 1px solid #444; padding: 0.5rem 0; }
+        .log-WARN { color: #ffd700; }
+        .log-ERROR { color: #ff7675; }
+    </style>
+</head>
+<body>
+    <h1>Log da Sessão</h1>
+    <button onclick="sessionStorage.removeItem('appLogs'); location.reload();">Limpar Logs</button>
+    <hr>
+    <pre id="log-container"></pre>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('log-container');
+            const logsJSON = sessionStorage.getItem('appLogs');
+            if (logsJSON) {
+                const logs = JSON.parse(logsJSON);
+                container.textContent = logs.map(log => 
+                    `<div class="log-entry log-${log.level}">[${log.timestamp}][${log.level}] ${log.message} ${log.data.length > 0 ? JSON.stringify(log.data) : ''}</div>`
+                ).join('');
+                // A linha acima está errada, innerHTML é necessário
+                container.innerHTML = logs.map(log => 
+                    `<div class="log-entry log-${log.level}">[${log.timestamp}][${log.level}] ${log.message} ${log.data.length > 0 ? JSON.stringify(log.data) : ''}</div>`
+                ).join('\n');
+            } else {
+                container.textContent = 'Nenhum log encontrado na sessão.';
+            }
+        });
+    </script>
+</body>
+</html>

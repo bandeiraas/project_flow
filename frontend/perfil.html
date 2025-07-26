@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - ProjectFlow</title>
+    
+    <!-- Google Fonts, Font Awesome, CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Eruda (opcional, para debug) -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</head>
+<body>
+
+    <!-- Placeholder para o cabeçalho -->
+    <div id="main-header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-user-circle"></i> Meu Perfil</h1>
+                <p>Gerencie suas informações pessoais e de segurança.</p>
+            </div>
+
+            <div class="profile-layout">
+                <!-- Coluna de Informações (Esquerda) -->
+                <div class="details-panel">
+                    <h2><i class="fas fa-id-card"></i> Suas Informações</h2>
+                    <div class="info-list">
+                        <div class="info-item"><strong>Nome:</strong> <span id="profile-nome">Carregando...</span></div>
+                        <div class="info-item"><strong>Email:</strong> <span id="profile-email"></span></div>
+                        <div class="info-item"><strong>Cargo:</strong> <span id="profile-cargo"></span></div>
+                        <div class="info-item"><strong>Telefone:</strong> <span id="profile-telefone"></span></div>
+                        <div class="info-item"><strong>Papel (Role):</strong> <span id="profile-role"></span></div>
+                    </div>
+                </div>
+
+                <!-- Coluna de Edição (Direita) -->
+                <div class="details-panel">
+                    <h2><i class="fas fa-edit"></i> Editar Perfil</h2>
+                    <form id="profile-form" class="form-container" style="padding: 0; box-shadow: none; border: none;">
+                        <div class="form-group">
+                            <label for="nome_completo">Nome Completo</label>
+                            <input type="text" id="nome_completo" name="nome_completo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cargo">Cargo</label>
+                            <input type="text" id="cargo" name="cargo">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="tel" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                <span class="btn-text">Salvar Alterações</span>
+                                <div class="loader-small" style="display: none;"></div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Painel de Alteração de Senha -->
+                <div class="details-panel password-panel">
+                    <h2><i class="fas fa-key"></i> Alterar Senha</h2>
+                    <form id="password-form" class="form-container" style="padding: 0; box-shadow: none; border: none;">
+                        <div class="form-group">
+                            <label for="senha_atual">Senha Atual</label>
+                            <input type="password" id="senha_atual" name="senha_atual" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nova_senha">Nova Senha</label>
+                            <input type="password" id="nova_senha" name="nova_senha" required minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmar_senha">Confirmar Nova Senha</label>
+                            <input type="password" id="confirmar_senha" name="confirmar_senha" required minlength="6">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                <span class="btn-text">Alterar Senha</span>
+                                <div class="loader-small" style="display: none;"></div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Placeholders para componentes globais -->
+    <div id="toast-container"></div>
+    <div id="modal-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="js/layout-loader.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,919 @@
+/* --- Cabeçalho / Barra de Navegação --- */
+.main-header {
+    background-color: var(--surface-color); /* CORREÇÃO */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+/* Em layout.css */
+
+.header-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Garante que a navegação principal fique centralizada */
+.main-nav {
+    flex-grow: 1; /* Ocupa o espaço disponível no meio */
+    display: flex;
+    justify-content: center; /* Centraliza os links */
+    gap: 1.5rem;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+
+/* --- Conteúdo Principal --- */
+.main-content {
+    padding-top: 2rem;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- Layouts de Grade --- */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.details-container {
+    background-color: var(--surface-color); /* CORREÇÃO */
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+/* --- Sidebar e Overlay (Layout Mobile) --- */
+/* Em layout.css */
+
+/* A sidebar começa fora da tela */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -280px;
+    width: 280px;
+    height: 100%;
+    background-color: var(--surface-color);
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    z-index: 1002;
+    transition: right 0.3s ease-in-out;
+    /* ... (outros estilos da sidebar) ... */
+}
+
+/* QUANDO O BODY TEM A CLASSE, a sidebar entra na tela */
+body.sidebar-open .sidebar {
+    right: 0;
+}
+
+/* O overlay começa invisível */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+/* QUANDO O BODY TEM A CLASSE, o overlay aparece */
+body.sidebar-open .overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+.overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* Adicione este bloco ao final de layout.css */
+
+/* --- Layout do Container de Filtros --- */
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: var(--surface-color);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.search-wrapper {
+    position: relative;
+    flex-grow: 1;
+    min-width: 280px;
+}
+
+.search-wrapper i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: var(--text-muted-color);
+    transition: color 0.3s;
+}
+
+#search-input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.5rem; /* Espaço para o ícone */
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.2);
+}
+
+.status-filters {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Adicione este bloco ao final de layout.css */
+
+/* --- Layout do Container de Ações --- */
+.action-container {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    transition: border-color 0.3s;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* --- Layout da Página de Detalhes Repaginada --- */
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.project-description {
+    font-size: 1.1rem;
+    color: var(--text-muted-color);
+    margin-bottom: 2rem;
+    max-width: 80ch;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.details-panel {
+    background-color: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.details-panel h2 {
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.info-list .info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.info-item strong {
+    color: var(--text-muted-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.timeline-container {
+    margin-top: 2rem;
+}
+
+/* --- Layout para o grupo de botões no cabeçalho da página de detalhes --- */
+.header-button-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0; /* Impede que os botões encolham em telas menores */
+}
+
+
+/* --- Layout Repaginado da Página de Detalhes --- */
+.status-header {
+    margin-bottom: 1rem;
+}
+
+.project-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Coluna principal 2x mais larga que a lateral */
+    gap: 1.5rem;
+}
+
+.main-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.sidebar-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Responsividade para o layout da página de detalhes */
+@media (max-width: 992px) {
+    .project-layout {
+        grid-template-columns: 1fr; /* Empilha as colunas */
+    }
+}
+
+@media (max-width: 576px) {
+    .project-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .header-button-group {
+        margin-top: 1rem;
+    }
+}
+
+/* --- Layout do Header do Cronograma --- */
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.view-toggle {
+    display: flex;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+
+/* --- MEDIA QUERIES PARA RESPONSIVIDADE --- */
+
+/* Estilos para telas com largura máxima de 768px (tablets em modo retrato e celulares) */
+@media (max-width: 768px) {
+
+    /* --- Cabeçalho Principal --- */
+    .main-nav {
+        display: none; /* Esconde a navegação principal em linha */
+    }
+    .hamburger-btn {
+        display: block; /* Mostra o botão hamburger */
+    }
+    .new-project-btn span {
+        display: none; /* Esconde o texto "Novo Projeto", deixando só o ícone '+' */
+    }
+    .new-project-btn {
+        padding: 0.6rem; /* Ajusta o padding para o botão ficar quadrado/redondo */
+        border-radius: 50%;
+    }
+
+    /* --- Página de Detalhes do Projeto --- */
+    .project-layout {
+        /* Força o layout de duas colunas a se tornar uma única coluna */
+        grid-template-columns: 1fr; 
+    }
+
+    .project-header {
+        /* Empilha o título e os botões verticalmente */
+        flex-direction: column;
+        align-items: flex-start; /* Alinha tudo à esquerda */
+    }
+    
+    .header-button-group {
+        margin-top: 1rem; /* Adiciona um espaço entre o título e os botões */
+    }
+
+    /* --- Dashboard --- */
+    .filter-container {
+        /* Empilha o campo de busca e os botões de filtro */
+        flex-direction: column;
+        align-items: stretch; /* Faz os itens ocuparem a largura total */
+    }
+}
+
+/* Estilos para telas ainda menores, com largura máxima de 480px (celulares) */
+@media (max-width: 480px) {
+    .container {
+        width: 95%; /* Aumenta um pouco a largura do container */
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem; /* Reduz um pouco o tamanho do título principal */
+    }
+
+    .details-panel, .form-container {
+        padding: 1rem; /* Reduz o padding interno dos painéis */
+    }
+
+    .timeline-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* --- Layout para a Página de Relatórios --- */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+/* Em layout.css */
+
+.chart-container {
+    background-color: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    
+    /* --- CORREÇÃO COM FLEXBOX --- */
+    display: flex; /* 1. Transforma o container em um flex container */
+    flex-direction: column; /* 2. Empilha os filhos (título e canvas) verticalmente */
+    height: 450px; /* 3. Mantém a altura fixa para evitar o loop de renderização */
+}
+
+.chart-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    flex-shrink: 0; /* Impede que o título encolha */
+}
+
+/* O canvas agora precisa de um container próprio para o flexbox funcionar bem */
+.chart-canvas-wrapper {
+    position: relative; /* Essencial para o Chart.js se posicionar corretamente */
+    flex-grow: 1; /* 4. Faz este wrapper ocupar todo o espaço vertical disponível */
+    min-height: 0; /* 5. Truque de CSS para evitar que o flex item transborde */
+}
+
+
+
+/* --- Layout para a Página de Relatórios (Repaginado) --- */
+.page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.page-header p {
+    color: var(--text-muted-color);
+    font-size: 1.1rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background-color: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.stat-card h3 {
+    font-size: 1rem;
+    color: var(--text-muted-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.chart-container {
+    background-color: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    position: relative;
+    height: 450px;
+}
+
+.chart-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+
+
+/* --- Layout para a Seção de Homologação --- */
+.homologation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.homologation-cycle {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.homologation-cycle:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.cycle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.cycle-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.cycle-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem; /* Espaçamento vertical e horizontal */
+    font-size: 0.9rem;
+    color: var(--text-muted-color);
+    margin-bottom: 0.5rem;
+}
+
+.cycle-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cycle-observation {
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--border-color);
+    font-style: italic;
+}
+
+
+/* --- Layout para a Página de Login --- */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+}
+
+.login-box {
+    background-color: var(--surface-color);
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header .logo-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.login-header h1 {
+    margin-bottom: 0.5rem;
+}
+
+.login-header p {
+    color: var(--text-muted-color);
+}
+
+.login-btn {
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.login-footer a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.error-message {
+    color: var(--danger-color);
+    background-color: rgba(231, 76, 60, 0.1);
+    border: 1px solid rgba(231, 76, 60, 0.2);
+    padding: 0.75rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    display: none; /* Começa escondido */
+}
+
+/* --- Layout Repaginado da Página de Detalhes --- */
+
+.project-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-main-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-main-info h1 {
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.kpi-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.kpi-item {
+    background-color: var(--surface-color);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.kpi-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-muted-color);
+    margin-bottom: 0.5rem;
+}
+
+.kpi-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* --- Sistema de Abas (Tabs) --- */
+.tabs-nav {
+    display: flex;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.tab-link {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-muted-color);
+    margin-bottom: -2px; /* Alinha a borda com a linha principal */
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.tab-link:hover {
+    color: var(--primary-color);
+}
+
+.tab-link.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.tab-pane {
+    display: none; /* Todas as abas começam escondidas */
+}
+
+.tab-pane.active {
+    display: block; /* A aba ativa é mostrada */
+    animation: fadeIn 0.5s; /* Animação de entrada suave */
+}
+
+/* --- MEDIA QUERIES PARA RESPONSIVIDADE --- */
+
+/* Estilos para telas com largura máxima de 900px (tablets em modo retrato e celulares grandes) */
+@media (max-width: 900px) {
+
+    /* --- Página de Detalhes do Projeto --- */
+    .project-layout {
+        /* Força o layout de duas colunas a se tornar uma única coluna */
+        grid-template-columns: 1fr; 
+    }
+
+    .kpi-panel {
+        /* Em vez de 4 colunas, mostra 2 colunas para melhor aproveitamento */
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .project-page-header {
+        /* Empilha o título e os botões verticalmente */
+        flex-direction: column;
+        align-items: flex-start; /* Alinha tudo à esquerda */
+    }
+    
+    .header-actions {
+        /* Adiciona um espaço entre o título e os botões */
+        margin-top: 1rem; 
+    }
+
+    .timeline-header {
+        /* Empilha o título e o seletor de visão */
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
+
+
+/* Estilos para telas ainda menores, com largura máxima de 480px (celulares) */
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    /* --- Página de Detalhes do Projeto --- */
+    .kpi-panel {
+        /* No celular, mostra os KPIs em uma única coluna */
+        grid-template-columns: 1fr;
+    }
+
+    .details-panel, .form-container {
+        padding: 1rem;
+    }
+
+    .tabs-nav {
+        /* Permite que as abas rolem horizontalmente se não couberem */
+        overflow-x: auto;
+        /* Esconde a barra de rolagem visualmente, mas mantém a funcionalidade */
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .tabs-nav::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+
+    .tab-link {
+        /* Garante que as abas não quebrem a linha */
+        white-space: nowrap;
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* --- Layout para a Página de Portfólio --- */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.objetivo-card {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.objetivo-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.objetivo-header h2 { margin: 0 0 0.25rem 0; }
+.objetivo-header p { margin: 0; color: var(--text-muted-color); }
+
+.objetivo-body {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+.objetivo-metrics .metric-item {
+    margin-bottom: 1rem;
+}
+.objetivo-metrics .metric-label {
+    font-size: 0.9rem;
+    color: var(--text-muted-color);
+}
+.objetivo-metrics .metric-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.objetivo-projects-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.objetivo-projects-list li a {
+    display: block;
+    padding: 0.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: background-color 0.2s;
+}
+.objetivo-projects-list li a:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+@media (max-width: 900px) {
+    .objetivo-body {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Adicione ao final de layout.css */
+
+/* --- Layout para o Header do Dashboard Unificado --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.view-toggle-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted-color);
+}
+
+/* --- Controle de Visibilidade dos Painéis --- */
+.view-pane {
+    display: none; /* Todos os painéis começam escondidos */
+}
+
+.view-pane.active {
+    display: block; /* Apenas o painel ativo é mostrado */
+    animation: fadeIn 0.5s;
+}
+
+/* Em layout.css */
+.my-panel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+/* Modificador para os cartões na visão "Meu Painel" */
+.project-grid.small .project-card {
+    padding: 1rem;
+}
+.project-grid.small .card-description,
+.project-grid.small .card-meta {
+    display: none; /* Esconde a descrição e os meta-dados para um visual mais limpo */
+}
+
+/* Em layout.css */
+
+/* ... (regras existentes) ... */
+
+/* --- MEDIA QUERIES PARA RESPONSIVIDADE --- */
+
+@media (max-width: 900px) {
+    /* ... (regras existentes para .project-layout, .kpi-panel, etc.) ... */
+
+    /* --- AJUSTE PARA O "MEU PAINEL" --- */
+    .my-panel-grid {
+        /* Em tablets, uma única coluna fica melhor */
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 480px) {
+    /* ... (regras existentes para .container, h1, etc.) ... */
+
+    /* Garante que a grade do "Meu Painel" continue com uma coluna */
+    .my-panel-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* --- AJUSTE PARA OS CARDS DE PROJETO NO "MEU PAINEL" --- */
+    /* A grade de projetos dentro do "Meu Painel" também deve ter uma coluna */
+    #meus-projetos-grid.project-grid.small {
+        grid-template-columns: 1fr;
+    }
+}

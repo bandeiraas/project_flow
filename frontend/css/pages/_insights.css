@@ -1,0 +1,76 @@
+/* --- Layout da Página de Insights --- */
+.insights-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr; /* Menu lateral de 220px e o resto para o conteúdo */
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.insights-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: sticky; /* Faz o menu "flutuar" ao rolar a página */
+    top: 80px; /* Distância do topo */
+}
+
+.insights-nav .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: left;
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    color: var(--text-muted-color);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.insights-nav .nav-btn:hover {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.insights-nav .nav-btn.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.view-pane {
+    display: none;
+}
+
+.view-pane.active {
+    display: block;
+    animation: fadeIn 0.5s;
+}
+
+/* --- Responsividade para a Página de Insights --- */
+@media (max-width: 900px) {
+    .insights-layout {
+        grid-template-columns: 1fr; /* Empilha o menu e o conteúdo */
+    }
+
+    .insights-nav {
+        flex-direction: row; /* Menu vira uma barra horizontal */
+        position: static; /* Remove o efeito "sticky" */
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 1.5rem;
+        overflow-x: auto; /* Permite rolar o menu se não couber */
+    }
+    .insights-nav .nav-btn {
+        white-space: nowrap; /* Impede que o texto do botão quebre a linha */
+    }
+}
+.chart-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted-color);
+    text-align: center;
+    margin-top: -1rem;
+    margin-bottom: 1.5rem;
+}

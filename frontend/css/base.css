@@ -1,0 +1,55 @@
+/* --- Variáveis de Cor e Configurações Globais --- */
+:root {
+    /* --- Paleta Modo Claro (Light Mode) --- */
+    --primary-color: #4a69bd;
+    --secondary-color: #1e3799;
+    --background-color: #f4f7f6; /* Fundo principal da página */
+    --surface-color: #ffffff;    /* Fundo de elementos como cards, header, modais */
+    --text-color: #343a40;       /* Cor principal do texto */
+    --text-muted-color: #5d646b; /* Cor de texto secundário, mais suave */
+    --border-color: #e1e5ea;     /* Cor de bordas e divisórias */
+    
+    /* Cores de Acento (não mudam com o tema) */
+    --success-color: #2ecc71;
+    --warning-color: #f1c40f;
+    --danger-color: #e74c3c;
+    --white: #ffffff;
+    --font-family: 'Poppins', sans-serif;
+}
+
+/* --- Paleta Modo Escuro (Dark Mode) --- */
+body.dark-mode {
+    --primary-color: #5d7fdf; /* Um azul um pouco mais brilhante para se destacar no fundo escuro */
+    --secondary-color: #82aaff;
+    --background-color: #121212; /* Padrão Material Design para um preto que não cansa a vista */
+    --surface-color: #1e1e1e;
+    --text-color: #e1e1e1;
+    --text-muted-color: #a8a8a8;
+    --border-color: #2c2c2c;
+}
+
+/* --- Reset e Estilos Base --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color); /* Usa a nova variável */
+    color: var(--text-color); /* Usa a nova variável */
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s; /* Transição suave ao trocar de tema */
+}
+
+h1 {
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+}
+/* Em base.css */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

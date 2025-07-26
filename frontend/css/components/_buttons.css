@@ -1,0 +1,326 @@
+/* --- Componente: Botões --- */
+.new-project-btn, .hamburger-btn, .modal-btn, .theme-toggle-btn, .action-btn {
+    cursor: pointer;
+}
+.new-project-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.new-project-btn:hover {
+    background-color: var(--secondary-color);
+}
+/* --- Componente: Botão Hamburger --- */
+.hamburger-btn {
+    display: none; /* Escondido por padrão em telas grandes */
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    width: 40px; /* Garante que ele tenha um tamanho */
+    height: 40px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.theme-toggle-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.theme-toggle-btn:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+/* Adiciona o ícone via CSS */
+.theme-toggle-btn::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    
+}
+
+/* --- Componente: Botão de Filtro --- */
+.filter-btn { background-color: transparent; border: 1px solid var(--border-color); color: var(--text-muted-color); padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: all 0.2s ease-in-out; }
+.filter-btn.active, .filter-btn:hover { background-color: var(--primary-color); color: var(--white); border-color: var(--primary-color); transform: translateY(-2px); }
+/* --- Componente: Botão de Ação (Mudar Status) --- */
+.action-btn {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    min-width: 140px;
+    min-height: 42px;
+}
+.action-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.action-btn:disabled { cursor: not-allowed; opacity: 0.7; }
+.action-btn.loading .btn-text { visibility: hidden; }
+.action-btn .loader-small { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; }
+.action-btn.loading .loader-small { display: block; }
+.action-btn.primary { background-color: var(--primary-color); color: var(--white); }
+.action-btn.primary:hover:not(:disabled) { background-color: var(--secondary-color); }
+.action-btn.danger { background-color: var(--danger-color); color: var(--white); }
+.action-btn.danger:hover:not(:disabled) { background-color: #c0392b; }
+
+/* Botões com mais destaque */
+.btn-primary, .btn-secondary {
+    padding: 0.8rem 1.8rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(74, 105, 189, 0.3);
+}
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-muted-color);
+    border: 2px solid var(--border-color);
+}
+.btn-secondary:hover {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}
+.loader-small {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid var(--white);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+/* Adicione este bloco ao final de components.css */
+.btn-secondary.small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+/* Estilo para o botão de perigo (Excluir) */
+.btn-danger {
+    background-color: var(--danger-color);
+    color: var(--white);
+    border: none;
+}
+.btn-danger:hover {
+    background-color: #c0392b; /* Um vermelho mais escuro para o hover */
+}
+/* Modificador de tamanho que já pode existir, mas garantimos aqui */
+.btn-danger.small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 5px;
+}
+
+/* --- Componente: Ícone Hamburger Animado --- */
+.hamburger-btn {
+    display: none; /* Escondido por padrão em telas grandes */
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: relative; /* Para o posicionamento das linhas */
+}
+.hamburger-line {
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+}
+/* --- Animação para o "X" quando a sidebar está aberta --- */
+.sidebar.open ~ .main-content .hamburger-btn .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.sidebar.open ~ .main-content .hamburger-btn .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.sidebar.open ~ .main-content .hamburger-btn .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+/* Ajuste para o modo escuro */
+body.dark-mode .hamburger-line {
+    background-color: var(--primary-color); /* Usa a cor primária do modo escuro */
+}
+/* Animação para o "X" quando o BODY tem a classe 'sidebar-open' */
+body.sidebar-open .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+body.sidebar-open .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+body.sidebar-open .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+
+
+/* --- Componente: Botão de Alternância de Visualização --- */
+.view-btn {
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    color: var(--text-muted-color);
+    transition: background-color 0.2s, color 0.2s;
+}
+.view-btn:hover {
+    background-color: var(--background-color);
+}
+.view-btn.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+
+/* --- Componente: Avatar de Usuário --- */
+.user-avatar {
+    display: inline-flex; /* Usa flex para centralizar a inicial */
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%; /* Deixa o fundo redondo */
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-right: 0.75rem;
+    user-select: none; 
+}
+/* Estilo para o container do usuário na tabela, para alinhar o avatar e o nome */
+.user-cell {
+    display: flex;
+    align-items: center;
+}
+
+/* --- Componente: Ícone de Cópia --- */
+.copy-icon {
+    margin-left: 0.75rem; /* Espaçamento em relação ao texto */
+    color: var(--text-muted-color);
+    cursor: pointer;
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    font-size: 0.9em; /* Um pouco menor que o texto ao lado */
+}
+.copy-icon:hover {
+    color: var(--primary-color);
+    transform: scale(1.2); /* Efeito de zoom sutil */
+}
+/* Ajuste para garantir que o ícone fique bem alinhado no info-item */
+.info-item {
+    align-items: center; /* Alinha verticalmente o texto e o ícone */
+}
+
+/* Em _buttons.css */
+.btn-primary.small,
+.btn-secondary.small,
+.btn-danger.small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* Em _buttons.css */
+
+/* --- Componente: Botão de Ação (Mudar Status) --- */
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os botões quebrem a linha em telas pequenas */
+    gap: 0.75rem; /* Espaçamento entre os botões */
+}
+
+.action-btn {
+    /* Remove a aparência padrão do botão */
+    border: none;
+    cursor: pointer;
+    
+    /* Usa Flexbox para alinhar o texto e o loader */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Dimensionamento e Estilo */
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px); /* Efeito sutil de "levantar" */
+}
+
+/* Estilo para o botão de ação primário */
+.action-btn.primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+.action-btn.primary:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Estilo para o botão de perigo (Cancelar) */
+.action-btn.danger {
+    background-color: var(--danger-color);
+    color: var(--white);
+}
+.action-btn.danger:hover {
+    background-color: #c0392b; /* Vermelho mais escuro */
+}
+
+/* Lógica de carregamento (já deve existir, mas para garantir) */
+.action-btn.loading .btn-text {
+    display: none;
+}
+.action-btn.loading .loader-small {
+    display: block;
+}
+
+
+/* Em _buttons.css */
+
+.action-btn {
+    /* ... (estilos existentes: border, cursor, display, etc.) ... */
+    
+    /* --- AJUSTE AQUI --- */
+    gap: 0.5rem; /* Adiciona um espaçamento entre o ícone e o texto */
+    
+    padding: 0.6rem 1.2rem;
+    /* ... (resto dos estilos) ... */
+}

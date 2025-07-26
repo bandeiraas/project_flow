@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights - ProjectFlow</title>
+    
+    <!-- Google Fonts, Font Awesome, CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script>document.write(`<link rel="stylesheet" href="css/main.css?v=${new Date().getTime()}">`);</script>
+
+    <!-- Bibliotecas de Gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css">
+
+    <!-- Eruda (opcional, para debug) -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</head>
+<body>
+    <div id="main-header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-lightbulb"></i> Insights</h1>
+                <p>Análise estratégica e operacional do seu portfólio de projetos.</p>
+            </div>
+
+            <div class="insights-layout">
+                <!-- Menu Lateral de Navegação das Visões -->
+                <aside class="insights-nav">
+                    <button class="nav-btn active" data-view="geral">
+                        <i class="fas fa-chart-pie"></i> Visão Geral
+                    </button>
+                    <button class="nav-btn" data-view="portfolio">
+                        <i class="fas fa-briefcase"></i> Portfólio
+                    </button>
+                    <button class="nav-btn" data-view="roadmap">
+                        <i class="fas fa-road"></i> Roadmap
+                    </button>
+                    <button class="nav-btn" data-view="qualidade">
+                        <i class="fas fa-shield-alt"></i> Qualidade
+                    </button>
+                </aside>
+
+                <!-- Container Principal para o Conteúdo das Visões -->
+                <div class="insights-content">
+                    <!-- Painel da Visão Geral (antiga Relatórios) -->
+                    <div id="view-geral" class="view-pane active">
+                        <div class="stats-grid">
+                            <!-- Estatísticas serão inseridas aqui -->
+                        </div>
+                        <div class="charts-grid">
+                            <!-- Gráficos serão inseridos aqui -->
+                        </div>
+                    </div>
+
+                    <!-- Painel da Visão de Portfólio -->
+                    <div id="view-portfolio" class="view-pane">
+                        <div class="portfolio-grid">
+                            <!-- Cards de Objetivo serão inseridos aqui -->
+                        </div>
+                    </div>
+
+                    <!-- Painel da Visão de Roadmap -->
+                    <div id="view-roadmap" class="view-pane">
+                        <div class="details-panel">
+                            <div class="panel-header">
+                                <h2>Linha do Tempo de Projetos</h2>
+                                <div class="gantt-controls">
+                                    <div class="gantt-zoom-toggle">
+                                        <button class="zoom-btn" data-view-mode="Week">Semana</button>
+                                        <button class="zoom-btn active" data-view-mode="Month">Mês</button>
+                                        <button class="zoom-btn" data-view-mode="Year">Ano</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gantt-container">
+                                <!-- O gráfico do roadmap será inserido aqui -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                   <!-- NOVO PAINEL PARA A VISÃO DE QUALIDADE  -->
+<div id="view-qualidade" class="view-pane">
+    <div class="charts-grid">
+        <div class="chart-container">
+            <h2>Taxa de Sucesso Histórica (%)</h2>
+            <p class="chart-subtitle">Evolução da qualidade dos ciclos de teste ao longo do tempo.</p>
+            <div class="chart-canvas-wrapper">
+                <canvas id="qa-taxa-sucesso-chart"></canvas>
+            </div>
+        </div>
+        <div class="chart-container">
+            <h2>Distribuição de Testes por Projeto</h2>
+            <p class="chart-subtitle">Total de testes aprovados, reprovados e bloqueados por projeto.</p>
+            <div class="chart-canvas-wrapper">
+                <canvas id="qa-distribuicao-chart"></canvas>
+            </div>
+        </div>
+    </div>
+</div> 
+                    
+                    
+       <!-- -->         </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Placeholders e Scripts -->
+    <div id="toast-container"></div>
+    <div id="modal-placeholder"></div>
+    <script src="js/layout-loader.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

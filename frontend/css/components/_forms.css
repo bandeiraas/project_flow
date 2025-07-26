@@ -1,0 +1,134 @@
+
+/* --- Componente: Formulário Repaginado --- */
+.form-container {
+    background-color: var(--surface-color);
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+body.dark-mode .form-container {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem 2rem;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+    color: var(--text-muted-color);
+}
+.form-group label i {
+    color: var(--primary-color);
+}
+/* Estilo base para todos os inputs, selects e textareas */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    font-family: var(--font-family);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-muted-color);
+    opacity: 0.7;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.2);
+}
+/* Faz o select parecer mais com os outros inputs */
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Em _forms.css */
+.disabled-input {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* --- Estilos Específicos para o Componente Tom Select --- */
+
+/* Estiliza o container principal do Tom Select para parecer com nossos outros inputs */
+.ts-control {
+    padding: 0.65rem 1rem !important; /* Usa !important para sobrescrever o padrão da biblioteca */
+    border: 1px solid var(--border-color);
+    border-radius: 5px; /* <-- A BORDA ARREDONDADA */
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Estilo para o foco */
+.ts-control.focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.2);
+}
+
+/* Estilo para os itens selecionados (as "pílulas") */
+.ts-control .item {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+}
+
+/* Estilo para o 'x' de remover um item */
+.ts-control .remove-button {
+    color: var(--white);
+    opacity: 0.7;
+}
+.ts-control .remove-button:hover {
+    opacity: 1;
+}
+
+/* --- Estilos para o Dropdown do Tom Select no Modo Escuro --- */
+body.dark-mode .ts-dropdown {
+    background-color: var(--surface-color);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+body.dark-mode .ts-dropdown .option:hover,
+body.dark-mode .ts-dropdown .active {
+    background-color: var(--primary-color);
+    color: var(--white);
+}

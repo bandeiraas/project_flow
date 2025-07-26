@@ -1,0 +1,24 @@
+/* --- Arquivo Principal de Estilos (main.css) --- */
+
+/* 1. Importa as variáveis e estilos base */
+@import url('base.css');
+
+/* 2. Importa os estilos de layout principal (estrutura da página) */
+@import url('layout.css');
+@import url('pages/_insights.css');
+
+/* 3. Importa todos os componentes individuais */
+@import url('components/_buttons.css');
+@import url('components/_cards.css');
+@import url('components/_forms.css');
+@import url('components/_header.css');
+@import url('components/_modal.css');
+@import url('components/_tags.css');
+@import url('components/_timeline.css');
+@import url('components/_switch.css');
+@import url('components/_tables.css');
+@import url('components/_gantt.css');
+@import url('components/_task-list.css');
+@import url('components/_progress-bar.css');
+@import url('components/_details.css');
+@import url('components/_homologation.css');

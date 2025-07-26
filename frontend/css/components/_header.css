@@ -1,0 +1,122 @@
+/* --- Componente: Links de Navegação --- */
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    /* Garante que o logo não seja espremido */
+    flex-shrink: 0;
+}
+.nav-link {
+    color: var(--text-muted-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem; /* Aumenta um pouco o tamanho da fonte para melhor toque */
+    display: flex; /* Alinha o ícone e o texto */
+    align-items: center;
+    padding: 1rem 1.5rem; /* Adiciona padding generoso */
+    transition: background-color 0.2s, color 0.2s;
+    border-left: 4px solid transparent; /* Borda para indicar o link ativo */
+}
+.nav-link i {
+    margin-right: 1rem; /* Espaço entre o ícone e o texto */
+    width: 20px; /* Garante que todos os ícones ocupem o mesmo espaço */
+    text-align: center;
+}
+
+/* Efeito hover para os links da sidebar */
+.sidebar .nav-link:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+/* Estilo para o link ativo na sidebar */
+.sidebar .nav-link.active {
+    color: var(--primary-color);
+    background-color: rgba(74, 105, 189, 0.1); /* Fundo azul bem translúcido */
+    border-left-color: var(--primary-color); /* Borda esquerda azul */
+}
+/* Remove a linha de baixo que não usamos mais */
+.sidebar .nav-link::after {
+    display: none;
+}
+
+/* Em _header.css */
+.sidebar .logout-link {
+    margin-top: auto; /* Empurra o link "Sair" para o final da sidebar */
+    border-top: 1px solid var(--border-color);
+    color: var(--danger-color);
+}
+.sidebar .logout-link:hover {
+    background-color: rgba(231, 76, 60, 0.1);
+}
+/* --- Estilos para o Perfil na Sidebar --- */
+.sidebar {
+    /* Garante que a sidebar seja um container flexível em coluna */
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-nav {
+    /* Este container ocupa todo o espaço disponível, empurrando o perfil para baixo */
+    flex-grow: 1;
+}
+
+.sidebar-profile {
+    /* Container do perfil no final da sidebar */
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0; /* Impede que o perfil encolha */
+}
+
+.profile-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-grow: 1; /* Ocupa o espaço, empurrando o logout para a direita */
+    text-decoration: none;
+    color: inherit;
+    border-radius: 5px;
+    padding: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.profile-link:hover {
+    background-color: var(--background-color);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+#sidebar-username {
+    font-weight: 600;
+}
+
+#sidebar-user-role {
+    font-size: 0.8rem;
+    color: var(--text-muted-color);
+}
+
+.logout-button {
+    color: var(--text-muted-color);
+    font-size: 1.2rem;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.logout-button:hover {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--danger-color);
+}
+
+/* Remove o estilo antigo do logout-link que não é mais necessário */
+.sidebar .logout-link {
+    margin-top: 0;
+    border-top: none;
+}

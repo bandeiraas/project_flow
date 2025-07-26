@@ -1,0 +1,196 @@
+/* --- Estilos para a Aba de Homologação --- */
+
+/* --- Componente: Acordeão de Ciclo de Homologação (Moderno) --- */
+.homologation-cycle-accordion {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease-in-out;
+}
+.homologation-cycle-accordion:last-child {
+    margin-bottom: 0;
+}
+
+/* Estilo do cabeçalho quando o acordeão está ABERTO */
+.homologation-cycle-accordion[open] {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 15px rgba(74, 105, 189, 0.1);
+}
+
+/* O <summary> é o cabeçalho clicável */
+.cycle-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    list-style: none; /* Remove a seta padrão */
+    transition: background-color 0.2s;
+}
+.cycle-summary::-webkit-details-marker {
+    display: none; /* Remove a seta padrão no Chrome/Safari */
+}
+
+.cycle-summary:hover {
+    background-color: var(--background-color);
+}
+
+/* Adiciona um ícone de seta customizado */
+.cycle-summary::after {
+    content: '\f078'; /* Ícone de seta para baixo (chevron) do Font Awesome */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: var(--text-muted-color);
+    transform: rotate(0deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Gira a seta quando o acordeão está aberto */
+.homologation-cycle-accordion[open] > .cycle-summary::after {
+    transform: rotate(180deg);
+}
+
+.summary-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.summary-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-muted-color);
+}
+
+/* O conteúdo que é expandido/recolhido */
+.cycle-content {
+    padding: 0 1.5rem 1.5rem 1.5rem; /* Padding apenas na parte de baixo */
+    border-top: 1px solid var(--border-color);
+    /* Animação de entrada para o conteúdo */
+    animation: fadeIn 0.5s ease;
+}
+
+/* --- Layout Interno do Conteúdo do Acordeão --- */
+.cycle-grid {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.cycle-details {
+    flex-grow: 1;
+}
+
+.cycle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.cycle-header h3 { font-size: 1.2rem; margin: 0; }
+
+.cycle-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted-color);
+    margin-bottom: 1rem;
+}
+.cycle-meta span { display: flex; align-items: center; gap: 0.5rem; }
+
+/* --- Componentes Visuais Dentro do Card --- */
+.cycle-chart-container {
+    text-align: center;
+    flex-shrink: 0;
+    width: 150px;
+}
+
+.mini-chart-wrapper {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    margin: 0 auto;
+}
+
+.cycle-chart-container p {
+    font-weight: 600;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 12px;
+    background-color: var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.5s ease-in-out;
+}
+.progress-bar.success { background-color: var(--success-color); }
+.progress-bar.warning { background-color: var(--warning-color); }
+.progress-bar.danger { background-color: var(--danger-color); }
+
+/* --- Responsividade --- */
+@media (max-width: 768px) {
+    .cycle-grid {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .cycle-chart-container {
+        order: -1;
+        width: 100%;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .mini-chart-wrapper {
+        height: 180px;
+        width: 180px;
+    }
+}
+/* Em _homologation.css */
+
+/* --- Responsividade Adicional para o Acordeão --- */
+@media (max-width: 480px) {
+    .cycle-summary {
+        /* Permite que os itens quebrem a linha */
+        flex-wrap: wrap;
+        padding: 1rem;
+    }
+
+    .summary-title {
+        /* Ocupa a linha inteira */
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .summary-meta {
+        /* Ocupa o espaço restante */
+        flex-grow: 1;
+    }
+
+    /* Garante que a seta fique alinhada com as meta-informações */
+    .cycle-summary::after {
+        align-self: center;
+    }
+}
+/* Em _homologation.css */
+
+/* --- Estilo de Foco Customizado para o Acordeão --- */
+.cycle-summary:focus-visible {
+    /* Remove o outline padrão */
+    outline: none;
+    
+    /* Adiciona uma "aura" (box-shadow) sutil com a cor do nosso tema */
+    box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.3);
+}

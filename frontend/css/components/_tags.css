@@ -1,0 +1,212 @@
+/* --- Componente: Tag de Status --- */
+.status-info { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; }
+
+.status-tag {
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.status-tag[data-status="Espeficação Aprovada"], 
+.status-tag[data-status="Projeto concluído"],
+.status-tag[data-status="Pós GMUD"] { background-color: #e9f9ee; color: #2ecc71; }
+.status-tag[data-status="Em Desenvolvimento"], 
+.status-tag[data-status="Em Homologação"] { background-color: #eaf2fd; color: #4a69bd; }
+.status-tag[data-status="Pendente de Implantação"] { background-color: #fef8e7; color: #f1c40f; }
+.status-tag[data-status="Cancelado"] { background-color: #fbe9e7; color: #e74c3c; }
+.status-tag[data-status="Em Definição"], 
+.status-tag[data-status="Em Especificação"] { background-color: #f4f4f4; color: #888; }
+/* Estilos Específicos para Tags de Status no Modo Escuro */
+body.dark-mode .status-tag { color: var(--text-color); }
+body.dark-mode .status-tag[data-status="Espeficação Aprovada"], 
+body.dark-mode .status-tag[data-status="Projeto concluído"],
+body.dark-mode .status-tag[data-status="Pós GMUD"] { background-color: rgba(46, 204, 113, 0.15); color: #2ecc71; }
+body.dark-mode .status-tag[data-status="Em Desenvolvimento"], 
+body.dark-mode .status-tag[data-status="Em Homologação"] { background-color: rgba(93, 127, 223, 0.15); color: #5d7fdf; }
+body.dark-mode .status-tag[data-status="Pendente de Implantação"] { background-color: rgba(241, 196, 15, 0.15); color: #f1c40f; }
+body.dark-mode .status-tag[data-status="Cancelado"] { background-color: rgba(231, 76, 60, 0.15); color: #e74c3c; }
+body.dark-mode .status-tag[data-status="Em Definição"], 
+body.dark-mode .status-tag[data-status="Em Especificação"] { background-color: rgba(168, 168, 168, 0.15); color: #a8a8a8; }
+
+/* --- Componente: Tag de Métrica (Prioridade, Risco, etc.) --- */
+.metric-tag {
+    display: inline-block; /* Permite aplicar padding e manter na linha */
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px; /* Deixa a tag mais arredondada, como a de status */
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--white); /* O texto será branco na maioria das tags */
+}
+/* --- Cores para Prioridade --- */
+.metric-tag[data-metric-type="prioridade"][data-metric-value="Crítica"] {
+    background-color: #c0392b; /* Vermelho mais escuro */
+}
+.metric-tag[data-metric-type="prioridade"][data-metric-value="Alta"] {
+    background-color: var(--danger-color); /* Vermelho */
+}
+.metric-tag[data-metric-type="prioridade"][data-metric-value="Média"] {
+    background-color: #f39c12; /* Laranja/Amarelo */
+}
+.metric-tag[data-metric-type="prioridade"][data-metric-value="Baixa"] {
+    background-color: var(--primary-color); /* Azul */
+}
+/* --- Cores para Complexidade --- */
+.metric-tag[data-metric-type="complexidade"][data-metric-value="Alta"] {
+    background-color: #8e44ad; /* Roxo */
+}
+.metric-tag[data-metric-type="complexidade"][data-metric-value="Média"] {
+    background-color: var(--text-muted-color);
+}
+.metric-tag[data-metric-type="complexidade"][data-metric-value="Baixa"] {
+    background-color: var(--text-muted-color);
+    opacity: 0.7;
+}
+/* --- Cores para Risco --- */
+.metric-tag[data-metric-type="risco"][data-metric-value="Alto"] {
+    background-color: var(--danger-color);
+}
+.metric-tag[data-metric-type="risco"][data-metric-value="Médio"] {
+    background-color: #f39c12;
+}
+.metric-tag[data-metric-type="risco"][data-metric-value="Baixo"] {
+    background-color: #27ae60; /* Verde um pouco mais escuro */
+}
+/* --- Estilos Específicos para Tags de Métricas no Modo Escuro --- */
+body.dark-mode .metric-tag {
+    color: var(--white); 
+}
+/* Cores para Prioridade no Modo Escuro */
+body.dark-mode .metric-tag[data-metric-type="prioridade"][data-metric-value="Crítica"] {
+    background-color: rgba(231, 76, 60, 0.2); /* Fundo vermelho translúcido */
+    color: #ff7675; /* Texto vermelho claro/rosa para legibilidade */
+}
+body.dark-mode .metric-tag[data-metric-type="prioridade"][data-metric-value="Alta"] {
+    background-color: rgba(243, 156, 18, 0.2); /* Fundo laranja translúcido */
+    color: #fab1a0; /* Texto laranja claro */
+}
+body.dark-mode .metric-tag[data-metric-type="prioridade"][data-metric-value="Média"] {
+    background-color: rgba(93, 127, 223, 0.2); /* Fundo azul translúcido */
+    color: #74b9ff; /* Texto azul claro */
+}
+body.dark-mode .metric-tag[data-metric-type="prioridade"][data-metric-value="Baixa"] {
+    background-color: rgba(46, 204, 113, 0.15); /* Fundo verde translúcido */
+    color: #55efc4; /* Texto verde claro (menta) */
+}
+/* Cores para Complexidade no Modo Escuro */
+body.dark-mode .metric-tag[data-metric-type="complexidade"][data-metric-value="Alta"] {
+    background-color: rgba(142, 68, 173, 0.2); /* Fundo roxo translúcido */
+    color: #a29bfe; /* Texto lavanda */
+}
+body.dark-mode .metric-tag[data-metric-type="complexidade"][data-metric-value="Média"] {
+    background-color: rgba(168, 168, 168, 0.2); /* Fundo cinza translúcido */
+    color: #dfe6e9;
+}
+body.dark-mode .metric-tag[data-metric-type="complexidade"][data-metric-value="Baixa"] {
+    background-color: rgba(168, 168, 168, 0.1);
+    color: #b2bec3;
+}
+/* Cores para Risco no Modo Escuro */
+body.dark-mode .metric-tag[data-metric-type="risco"][data-metric-value="Alto"] {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #ff7675;
+}
+body.dark-mode .metric-tag[data-metric-type="risco"][data-metric-value="Médio"] {
+    background-color: rgba(241, 196, 15, 0.2);
+    color: #fab1a0;
+}
+body.dark-mode .metric-tag[data-metric-type="risco"][data-metric-value="Baixo"] {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #55efc4;
+}
+/* --- Componente: Tag de Status de Prazo --- */
+.prazo-tag {
+    padding: 0.25rem 0.75rem;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--white);
+}
+.prazo-tag.no-prazo {
+    background-color: #27ae60; /* Verde */
+}
+.prazo-tag.atrasado {
+    background-color: var(--danger-color); 
+}
+.prazo-tag.concluido-prazo {
+    background-color: var(--primary-color); 
+}
+.prazo-tag.concluido-atraso {
+    background-color: #f39c12; 
+}
+/* Em _tags.css */
+
+/* --- Componente: Lista de Tags --- */
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.objective-tag {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Em _tags.css */
+
+/* --- Cores Adicionais para Tags de Status (Homologação) --- */
+
+/* A classe .status-tag já define o estilo base (padding, border-radius, etc.) */
+
+.status-tag[data-status="Aprovado"] {
+    background-color: var(--success-color);
+    color: var(--white);
+}
+
+.status-tag[data-status="Reprovado"] {
+    background-color: var(--danger-color);
+    color: var(--white);
+}
+
+.status-tag[data-status="Aprovado com Ressalvas"] {
+    background-color: var(--warning-color);
+    color: var(--white);
+}
+
+.status-tag[data-status="Em Andamento"] {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+/* --- Estilos para o Modo Escuro --- */
+
+body.dark-mode .status-tag[data-status="Aprovado"] {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #55efc4;
+}
+
+body.dark-mode .status-tag[data-status="Reprovado"] {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #ff7675;
+}
+
+body.dark-mode .status-tag[data-status="Aprovado com Ressalvas"] {
+    background-color: rgba(243, 156, 18, 0.2);
+    color: #fab1a0;
+}
+
+body.dark-mode .status-tag[data-status="Em Andamento"] {
+    background-color: rgba(74, 105, 189, 0.2);
+    color: #74b9ff;
+}

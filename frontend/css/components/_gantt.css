@@ -1,0 +1,197 @@
+/* --- Estilos para a Aba e Controles do Gráfico de Gantt --- */
+
+.gantt-container {
+    width: 100%;
+    min-height: 300px; 
+    padding-top: 1rem;
+}
+
+.gantt-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap; /* Permite que os controles quebrem a linha em telas menores */
+}
+
+.gantt-zoom-toggle {
+    display: flex;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.zoom-btn {
+    background-color: transparent;
+    border: none;
+    border-left: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: var(--text-muted-color);
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.zoom-btn:first-child {
+    border-left: none;
+}
+
+.zoom-btn.active,
+.zoom-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+/* --- Customização Visual do Frappe Gantt (Modo Claro - Padrão) --- */
+
+/* Barra principal da tarefa */
+.gantt .bar {
+    fill: var(--primary-color);
+    stroke: var(--secondary-color);
+    stroke-width: 1;
+}
+
+/* Barra de progresso dentro da barra principal */
+.gantt .bar-progress {
+    fill: var(--secondary-color);
+}
+
+/* Barra de tarefa concluída (usando a custom_class 'bar-milestone') */
+.gantt .bar-milestone .bar {
+    fill: var(--success-color);
+    stroke: #27ae60;
+}
+.gantt .bar-milestone .bar-progress {
+    fill: #27ae60; /* Verde mais escuro */
+}
+
+/* Texto dentro da barra */
+.gantt .bar-label {
+    fill: #fff;
+    font-weight: 500;
+}
+
+/* Linha vertical que marca o dia de hoje */
+.gantt .today-highlight {
+    fill: var(--primary-color);
+    opacity: 0.1;
+}
+
+/* Seta de dependência entre tarefas */
+.gantt .arrow {
+    fill: var(--text-muted-color);
+}
+
+/* Tooltip (caixa de informação ao passar o mouse) */
+.gantt-container .gantt-tooltip {
+    background-color: var(--surface-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+}
+
+/* --- Customização Visual do Frappe Gantt (MODO ESCURO) --- */
+
+body.dark-mode .gantt .grid-background {
+    fill: var(--surface-color); 
+}
+
+body.dark-mode .gantt .grid-header,
+body.dark-mode .gantt .grid-row {
+    fill: var(--surface-color);
+}
+
+body.dark-mode .gantt .grid-body .grid-row:nth-child(even) {
+    fill: var(--background-color);
+}
+
+body.dark-mode .gantt .tick {
+    stroke: var(--border-color);
+}
+
+body.dark-mode .gantt .today-highlight {
+    opacity: 0.2;
+}
+
+body.dark-mode .gantt .upper-text,
+body.dark-mode .gantt .lower-text {
+    fill: var(--text-muted-color);
+}
+
+body.dark-mode .gantt .task-name {
+    fill: var(--text-color);
+}
+
+body.dark-mode .gantt .bar {
+    fill: var(--primary-color);
+    stroke: var(--primary-color);
+}
+
+body.dark-mode .gantt .bar-progress {
+    fill: #74b9ff; /* Azul mais claro para contraste */
+}
+
+body.dark-mode .gantt .bar-milestone .bar {
+    fill: var(--success-color);
+    stroke: var(--success-color);
+}
+body.dark-mode .gantt .bar-milestone .bar-progress {
+    fill: #55efc4; /* Verde menta para contraste */
+}
+
+body.dark-mode .gantt .arrow {
+    fill: var(--text-muted-color);
+}
+
+/* Correção para o Tooltip no Modo Escuro */
+body.dark-mode .gantt-container .gantt-tooltip {
+    background: transparent !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4) !important;
+    color: initial !important; 
+}
+
+body.dark-mode .gantt-tooltip .gantt-tooltip-content {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+body.dark-mode .gantt-tooltip .gantt-tooltip-content h4 {
+    color: var(--text-color);
+}
+
+body.dark-mode .gantt-tooltip .gantt-tooltip-content p {
+    color: var(--text-muted-color);
+}
+
+body.dark-mode .gantt-tooltip .gantt-tooltip-content p strong {
+    color: var(--text-color);
+}
+
+/* --- Estilos para as Barras do Roadmap por Status --- */
+/* O JS adiciona a classe 'bar-status-em-desenvolvimento', por exemplo */
+
+.gantt .bar-status-em-definicao .bar,
+.gantt .bar-status-em-especificacao .bar {
+    fill: #95A5A6; /* Cinza */
+}
+.gantt .bar-status-aprovado .bar,
+.gantt .bar-status-espeficacao-aprovada .bar {
+    fill: #3498DB; /* Azul claro */
+}
+.gantt .bar-status-em-desenvolvimento .bar {
+    fill: #4A69BD; /* Azul primário */
+}
+.gantt .bar-status-em-homologacao .bar {
+    fill: #8E44AD; /* Roxo */
+}
+.gantt .bar-status-pendente-de-implantacao .bar {
+    fill: #F39C12; /* Laranja */
+}
+.gantt .bar-status-pos-gmud .bar,
+.gantt .bar-status-projeto-concluido .bar {
+    fill: #2ECC71; /* Verde */
+}
+.gantt .bar-status-cancelado .bar {
+    fill: #E74C3C; /* Vermelho */
+}

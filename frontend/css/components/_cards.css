@@ -1,0 +1,162 @@
+/* --- Componente: Cartão de Projeto --- */
+.project-card {
+    background-color: var(--surface-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(20px);
+    animation-fill-mode: forwards; 
+}
+/* Animação para os cartões do dashboard */
+@keyframes fadeInCard {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.project-card:hover { transform: translateY(-5px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+.project-card h3 { font-size: 1.2rem; font-weight: 600; color: var(--primary-color); margin-bottom: 0.5rem; }
+.project-card p { font-size: 0.9rem; color: var(--text-muted-color); margin-bottom: 1rem; flex-grow: 1; }
+
+
+/* --- Componente: Caixa de Informação (Página de Detalhes) --- */
+.info-box { background-color: var(--background-color); padding: 1rem; border-radius: 5px; transition: background-color 0.3s; }
+.info-box strong { display: block; color: var(--text-muted-color); font-size: 0.9rem; margin-bottom: 0.25rem; }
+.info-box span { font-size: 1.1rem; font-weight: 600; }
+
+/* --- Componente: Esqueleto de Carregamento (Skeleton) --- */
+.skeleton-card { background-color: var(--surface-color); border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07); padding: 1.5rem; transition: background-color 0.3s; }
+.skeleton { background-color: var(--border-color); border-radius: 4px; animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+.skeleton.title { height: 24px; width: 70%; margin-bottom: 0.75rem; }
+.skeleton.text { height: 16px; width: 90%; margin-bottom: 0.5rem; }
+.skeleton.text-short { width: 60%; }
+.skeleton.tag { height: 30px; width: 100px; border-radius: 15px; margin-top: 1rem; }
+
+/* Em css/components/_cards.css */
+
+/* --- Ajuste no Cabeçalho do Cartão --- */
+.card-header {
+    display: flex;
+    align-items: center; /* Alinha verticalmente os itens */
+    gap: 0.5rem; /* Espaçamento entre o indicador, título e tag */
+    margin-bottom: 0.75rem;
+}
+
+.card-header h3 {
+    flex-grow: 1; /* Faz o título ocupar o espaço disponível, empurrando a tag para a direita */
+    margin-bottom: 0; /* Remove a margem que não é mais necessária */
+}
+
+/* --- Componente: Indicador de Saúde do Projeto --- */
+.health-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0; /* Impede que o círculo seja espremido */
+    /* A cor de fundo será definida pelas classes de modificação */
+}
+
+.health-indicator.danger {
+    background-color: var(--danger-color);
+}
+
+.health-indicator.warning {
+    background-color: var(--warning-color);
+}
+
+.health-indicator.success {
+    background-color: var(--success-color);
+}
+
+/* --- Estilo para a Tag de Prioridade (já deve existir, mas para garantir) --- */
+.priority-tag {
+    /* Estilos para a tag de prioridade, se você ainda não os tiver */
+    padding: 0.2rem 0.6rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--white);
+    flex-shrink: 0;
+}
+
+/* Cores para a tag de prioridade */
+.priority-tag[data-priority="Crítica"] { background-color: #c0392b; }
+.priority-tag[data-priority="Alta"] { background-color: var(--danger-color); }
+.priority-tag[data-priority="Média"] { background-color: var(--warning-color); }
+.priority-tag[data-priority="Baixa"] { background-color: var(--primary-color); }
+
+/* Adicione este bloco ao final de css/components/_cards.css */
+
+/* --- Estilos Específicos para Indicadores de Saúde no Modo Escuro --- */
+
+body.dark-mode .health-indicator.danger {
+    background-color: #ff7675; /* Vermelho claro/rosa */
+}
+
+body.dark-mode .health-indicator.warning {
+    background-color: #fab1a0; /* Laranja claro */
+}
+
+body.dark-mode .health-indicator.success {
+    background-color: #55efc4; /* Verde claro (menta) */
+}
+
+/* --- Ajuste Opcional para as Tags de Prioridade no Modo Escuro --- */
+/* Se você também quiser ajustar as tags de prioridade para o modo escuro */
+
+body.dark-mode .priority-tag[data-priority="Crítica"] {
+    background-color: rgba(192, 57, 43, 0.3);
+    color: #ff7675;
+}
+body.dark-mode .priority-tag[data-priority="Alta"] {
+    background-color: rgba(231, 76, 60, 0.3);
+    color: #ff7675;
+}
+body.dark-mode .priority-tag[data-priority="Média"] {
+    background-color: rgba(243, 156, 18, 0.3);
+    color: #fab1a0;
+}
+body.dark-mode .priority-tag[data-priority="Baixa"] {
+    background-color: rgba(74, 105, 189, 0.3);
+    color: #74b9ff;
+}
+
+/* --- Componente: Lista de Avatares --- */
+.avatar-list {
+    display: flex;
+    flex-direction: column; /* Empilha os membros verticalmente */
+    gap: 0.75rem;
+}
+
+.avatar-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: var(--background-color);
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+/* Estilo para o avatar (círculo com inicial) que já temos */
+.user-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 0.9rem;
+    user-select: none;
+    flex-shrink: 0; /* Impede que o avatar encolha */
+}

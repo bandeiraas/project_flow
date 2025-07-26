@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio de Projetos - ProjectFlow</title>
+    <!-- Google Fonts, Font Awesome, CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Eruda (opcional, para debug) -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</head>
+<body>
+    <div id="main-header-placeholder"></div>
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-briefcase"></i> Portfólio de Projetos</h1>
+                <p>Visão estratégica dos projetos alinhados aos objetivos da empresa.</p>
+            </div>
+
+            <!-- Container para os cards de objetivos -->
+            <div id="portfolio-container" class="portfolio-grid">
+                <!-- O JavaScript preencherá esta área com os cards de objetivo -->
+            </div>
+        </div>
+    </main>
+   
+       <!-- 1. Biblioteca Chart.js (via CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- 2. Nossos scripts da aplicação -->
+    <script src="js/layout-loader.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

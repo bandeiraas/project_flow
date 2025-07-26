@@ -1,0 +1,58 @@
+/* --- Componente: Lista de Tarefas (Meu Painel) --- */
+
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s;
+}
+
+.task-item:last-child {
+    border-bottom: none;
+}
+
+.task-item:hover {
+    background-color: var(--background-color);
+}
+
+.task-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.task-name {
+    font-weight: 600;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.task-name:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.task-project {
+    font-size: 0.85rem;
+    color: var(--text-muted-color);
+}
+
+.task-deadline {
+    font-size: 0.9rem;
+    color: var(--text-muted-color);
+    text-align: right;
+}
+
+/* Estilo para prazos vencidos */
+.task-deadline.overdue {
+    color: var(--danger-color);
+    font-weight: 600;
+}

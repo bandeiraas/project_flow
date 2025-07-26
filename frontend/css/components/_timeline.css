@@ -1,0 +1,159 @@
+/* --- Componente: Cronograma (Timeline) --- */
+#cronograma-lista { list-style: none; }
+#cronograma-lista li { 
+    position: relative; 
+    padding: 1rem 1rem 1rem 2.5rem; 
+    border-left: 3px solid var(--border-color); 
+    transition: border-left-color 0.5s ease-out;
+}
+#cronograma-lista li::before { 
+    content: ''; 
+    position: absolute; 
+    left: -9px; 
+    top: 1.2rem; 
+    width: 15px; 
+    height: 15px; 
+    border-radius: 50%; 
+    background-color: var(--border-color); 
+    border: 3px solid var(--surface-color);
+    transition: background-color 0.5s ease-out;
+}
+#cronograma-lista li i {
+    margin-right: 0.75rem;
+    width: 20px;
+    text-align: center;
+    color: var(--text-muted-color);
+    transition: color 0.5s ease-out;
+}
+/* Estilo para itens do cronograma que já foram concluídos */
+#cronograma-lista li.completed-item {
+    border-left-color: var(--primary-color);
+}
+#cronograma-lista li.completed-item::before {
+    background-color: var(--primary-color);
+}
+#cronograma-lista li.completed-item i {
+    color: var(--primary-color);
+}
+/* Estilo para o item que acabou de ser adicionado (animação e destaque extra) */
+#cronograma-lista li.new-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInItem 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    font-weight: 600;
+}
+@keyframes slideInItem { to { opacity: 1; transform: translateX(0); } }
+
+#cronograma-lista li.new-item strong {
+    color: var(--secondary-color);
+}
+/* --- Componente: Loading Spinner --- */
+.loader { border: 5px solid var(--background-color); border-top: 5px solid var(--primary-color); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 2rem auto; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* --- Estilos para a Tabela do Cronograma --- */
+.timeline-table {
+    width: 100%;
+    border-collapse: collapse; /* Remove o espaçamento entre as células */
+    margin-top: 1rem;
+    font-size: 0.9rem; /* Um pouco menor para caber mais informação */
+}
+.timeline-table th, .timeline-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s; /* Adiciona transição suave para o hover */
+}
+.timeline-table th {
+    background-color: var(--background-color);
+    font-weight: 600;
+    color: var(--text-muted-color);
+}
+/* Aplica uma cor de fundo sutil a todas as linhas pares (2ª, 4ª, 6ª, etc.) */
+.timeline-table tbody tr:nth-child(even) {
+    background-color: var(--background-color);
+}
+/* Destaca a linha inteira quando o mouse passa por cima */
+.timeline-table tbody tr:hover {
+    background-color: rgba(74, 105, 189, 0.1); 
+}
+/* --- Melhorias no Cronograma --- */
+.log-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.log-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted-color);
+    margin-left: auto; /* Empurra para a direita */
+}
+.log-observation {
+    margin-top: 0.75rem;
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: var(--text-muted-color);
+    border-left: 3px solid var(--border-color);
+    margin-left: 8px; /* Alinha com o texto do status */
+}
+
+#cronograma-tabela {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+#cronograma-tabela th, #cronograma-tabela td {
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+#cronograma-tabela th {
+    font-weight: 600;
+    color: var(--text-muted-color);
+}
+#cronograma-tabela tbody tr:hover {
+    background-color: var(--background-color);
+}
+
+/* --- Componentes da Página de Detalhes Repaginada --- */
+.details-panel {
+    background-color: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.details-panel h2 {
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.info-list .info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.info-list .info-item:last-child {
+    border-bottom: none;
+}
+.info-item strong {
+    color: var(--text-muted-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.info-item span {
+    font-weight: 600;
+    text-align: right;
+}
+
+

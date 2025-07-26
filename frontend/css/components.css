@@ -1,0 +1,900 @@
+/* --- Componente: Botões --- */
+.new-project-btn, .hamburger-btn, .modal-btn, .theme-toggle-btn, .action-btn {
+    cursor: pointer;
+}
+.new-project-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.new-project-btn:hover {
+    background-color: var(--secondary-color);
+}
+/* --- Componente: Botão Hamburger --- */
+.hamburger-btn {
+    display: none; /* Escondido por padrão em telas grandes */
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    width: 40px; /* Garante que ele tenha um tamanho */
+    height: 40px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.theme-toggle-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.theme-toggle-btn:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+/* Adiciona o ícone via CSS */
+.theme-toggle-btn::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    
+}
+/* --- Componente: Botão de Filtro --- */
+.filter-btn { background-color: transparent; border: 1px solid var(--border-color); color: var(--text-muted-color); padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: all 0.2s ease-in-out; }
+.filter-btn.active, .filter-btn:hover { background-color: var(--primary-color); color: var(--white); border-color: var(--primary-color); transform: translateY(-2px); }
+/* --- Componente: Botão de Ação (Mudar Status) --- */
+.action-btn {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    min-width: 140px;
+    min-height: 42px;
+}
+.action-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.action-btn:disabled { cursor: not-allowed; opacity: 0.7; }
+.action-btn.loading .btn-text { visibility: hidden; }
+.action-btn .loader-small { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; }
+.action-btn.loading .loader-small { display: block; }
+.action-btn.primary { background-color: var(--primary-color); color: var(--white); }
+.action-btn.primary:hover:not(:disabled) { background-color: var(--secondary-color); }
+.action-btn.danger { background-color: var(--danger-color); color: var(--white); }
+.action-btn.danger:hover:not(:disabled) { background-color: #c0392b; }
+
+/* Botões com mais destaque */
+.btn-primary, .btn-secondary {
+    padding: 0.8rem 1.8rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(74, 105, 189, 0.3);
+}
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-muted-color);
+    border: 2px solid var(--border-color);
+}
+.btn-secondary:hover {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}
+.loader-small {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid var(--white);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+/* Adicione este bloco ao final de components.css */
+.btn-secondary.small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+/* Estilo para o botão de perigo (Excluir) */
+.btn-danger {
+    background-color: var(--danger-color);
+    color: var(--white);
+    border: none;
+}
+.btn-danger:hover {
+    background-color: #c0392b; /* Um vermelho mais escuro para o hover */
+}
+/* Modificador de tamanho que já pode existir, mas garantimos aqui */
+.btn-danger.small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 5px;
+}
+
+/* --- Componente: Ícone Hamburger Animado --- */
+.hamburger-btn {
+    display: none; /* Escondido por padrão em telas grandes */
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: relative; /* Para o posicionamento das linhas */
+}
+.hamburger-line {
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+}
+/* --- Animação para o "X" quando a sidebar está aberta --- */
+.sidebar.open ~ .main-content .hamburger-btn .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.sidebar.open ~ .main-content .hamburger-btn .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.sidebar.open ~ .main-content .hamburger-btn .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+/* Ajuste para o modo escuro */
+body.dark-mode .hamburger-line {
+    background-color: var(--primary-color); /* Usa a cor primária do modo escuro */
+}
+/* Animação para o "X" quando o BODY tem a classe 'sidebar-open' */
+body.sidebar-open .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+body.sidebar-open .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+body.sidebar-open .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+
+
+/* --- Componente: Botão de Alternância de Visualização --- */
+.view-btn {
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    color: var(--text-muted-color);
+    transition: background-color 0.2s, color 0.2s;
+}
+.view-btn:hover {
+    background-color: var(--background-color);
+}
+.view-btn.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+
+/* --- Componente: Avatar de Usuário --- */
+.user-avatar {
+    display: inline-flex; /* Usa flex para centralizar a inicial */
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%; /* Deixa o fundo redondo */
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-right: 0.75rem;
+    user-select: none; 
+}
+/* Estilo para o container do usuário na tabela, para alinhar o avatar e o nome */
+.user-cell {
+    display: flex;
+    align-items: center;
+}
+
+/* --- Componente: Ícone de Cópia --- */
+.copy-icon {
+    margin-left: 0.75rem; /* Espaçamento em relação ao texto */
+    color: var(--text-muted-color);
+    cursor: pointer;
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    font-size: 0.9em; /* Um pouco menor que o texto ao lado */
+}
+.copy-icon:hover {
+    color: var(--primary-color);
+    transform: scale(1.2); /* Efeito de zoom sutil */
+}
+/* Ajuste para garantir que o ícone fique bem alinhado no info-item */
+.info-item {
+    align-items: center; /* Alinha verticalmente o texto e o ícone */
+}
+
+
+
+/* --- Componente: Links de Navegação --- */
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    /* Garante que o logo não seja espremido */
+    flex-shrink: 0;
+}
+.nav-link {
+    color: var(--text-muted-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem; /* Aumenta um pouco o tamanho da fonte para melhor toque */
+    display: flex; /* Alinha o ícone e o texto */
+    align-items: center;
+    padding: 1rem 1.5rem; /* Adiciona padding generoso */
+    transition: background-color 0.2s, color 0.2s;
+    border-left: 4px solid transparent; /* Borda para indicar o link ativo */
+}
+.nav-link i {
+    margin-right: 1rem; /* Espaço entre o ícone e o texto */
+    width: 20px; /* Garante que todos os ícones ocupem o mesmo espaço */
+    text-align: center;
+}
+
+
+/* Efeito hover para os links da sidebar */
+.sidebar .nav-link:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+/* Estilo para o link ativo na sidebar */
+.sidebar .nav-link.active {
+    color: var(--primary-color);
+    background-color: rgba(74, 105, 189, 0.1); /* Fundo azul bem translúcido */
+    border-left-color: var(--primary-color); /* Borda esquerda azul */
+}
+/* Remove a linha de baixo que não usamos mais */
+.sidebar .nav-link::after {
+    display: none;
+}
+
+/* --- Componente: Cartão de Projeto --- */
+.project-card {
+    background-color: var(--surface-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(20px);
+    animation-fill-mode: forwards; 
+}
+/* Animação para os cartões do dashboard */
+@keyframes fadeInCard {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.project-card:hover { transform: translateY(-5px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+.project-card h3 { font-size: 1.2rem; font-weight: 600; color: var(--primary-color); margin-bottom: 0.5rem; }
+.project-card p { font-size: 0.9rem; color: var(--text-muted-color); margin-bottom: 1rem; flex-grow: 1; }
+/* --- Componente: Caixa de Informação (Página de Detalhes) --- */
+.info-box { background-color: var(--background-color); padding: 1rem; border-radius: 5px; transition: background-color 0.3s; }
+.info-box strong { display: block; color: var(--text-muted-color); font-size: 0.9rem; margin-bottom: 0.25rem; }
+.info-box span { font-size: 1.1rem; font-weight: 600; }
+/* --- Componente: Esqueleto de Carregamento (Skeleton) --- */
+.skeleton-card { background-color: var(--surface-color); border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07); padding: 1.5rem; transition: background-color 0.3s; }
+.skeleton { background-color: var(--border-color); border-radius: 4px; animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+.skeleton.title { height: 24px; width: 70%; margin-bottom: 0.75rem; }
+.skeleton.text { height: 16px; width: 90%; margin-bottom: 0.5rem; }
+.skeleton.text-short { width: 60%; }
+.skeleton.tag { height: 30px; width: 100px; border-radius: 15px; margin-top: 1rem; }
+
+
+/* --- Componente: Tag de Status --- */
+.status-info { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; }
+
+.status-tag {
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.status-tag[data-status="Espeficação Aprovada"], 
+.status-tag[data-status="Projeto concluído"],
+.status-tag[data-status="Pós GMUD"] { background-color: #e9f9ee; color: #2ecc71; }
+.status-tag[data-status="Em Desenvolvimento"], 
+.status-tag[data-status="Em Homologação"] { background-color: #eaf2fd; color: #4a69bd; }
+.status-tag[data-status="Pendente de Implantação"] { background-color: #fef8e7; color: #f1c40f; }
+.status-tag[data-status="Cancelado"] { background-color: #fbe9e7; color: #e74c3c; }
+.status-tag[data-status="Em Definição"], 
+.status-tag[data-status="Em Especificação"] { background-color: #f4f4f4; color: #888; }
+/* Estilos Específicos para Tags de Status no Modo Escuro */
+body.dark-mode .status-tag { color: var(--text-color); }
+body.dark-mode .status-tag[data-status="Espeficação Aprovada"], 
+body.dark-mode .status-tag[data-status="Projeto concluído"],
+body.dark-mode .status-tag[data-status="Pós GMUD"] { background-color: rgba(46, 204, 113, 0.15); color: #2ecc71; }
+body.dark-mode .status-tag[data-status="Em Desenvolvimento"], 
+body.dark-mode .status-tag[data-status="Em Homologação"] { background-color: rgba(93, 127, 223, 0.15); color: #5d7fdf; }
+body.dark-mode .status-tag[data-status="Pendente de Implantação"] { background-color: rgba(241, 196, 15, 0.15); color: #f1c40f; }
+body.dark-mode .status-tag[data-status="Cancelado"] { background-color: rgba(231, 76, 60, 0.15); color: #e74c3c; }
+body.dark-mode .status-tag[data-status="Em Definição"], 
+body.dark-mode .status-tag[data-status="Em Especificação"] { background-color: rgba(168, 168, 168, 0.15); color: #a8a8a8; }
+
+
+/* --- Componente: Tag de Métrica (Prioridade, Risco, etc.) --- */
+.metric-tag {
+    display: inline-block; /* Permite aplicar padding e manter na linha */
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px; /* Deixa a tag mais arredondada, como a de status */
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--white); /* O texto será branco na maioria das tags */
+}
+/* --- Cores para Prioridade --- */
+.metric-tag[data-metric-type="prioridade"][data-metric-value="Crítica"] {
+    background-color: #c0392b; /* Vermelho mais escuro */
+}
+.metric-tag[data-metric-type="prioridade"][data-metric-value="Alta"] {
+    background-color: var(--danger-color); /* Vermelho */
+}
+.metric-tag[data-metric-type="prioridade"][data-metric-value="Média"] {
+    background-color: #f39c12; /* Laranja/Amarelo */
+}
+.metric-tag[data-metric-type="prioridade"][data-metric-value="Baixa"] {
+    background-color: var(--primary-color); /* Azul */
+}
+/* --- Cores para Complexidade --- */
+.metric-tag[data-metric-type="complexidade"][data-metric-value="Alta"] {
+    background-color: #8e44ad; /* Roxo */
+}
+.metric-tag[data-metric-type="complexidade"][data-metric-value="Média"] {
+    background-color: var(--text-muted-color);
+}
+.metric-tag[data-metric-type="complexidade"][data-metric-value="Baixa"] {
+    background-color: var(--text-muted-color);
+    opacity: 0.7;
+}
+/* --- Cores para Risco --- */
+.metric-tag[data-metric-type="risco"][data-metric-value="Alto"] {
+    background-color: var(--danger-color);
+}
+.metric-tag[data-metric-type="risco"][data-metric-value="Médio"] {
+    background-color: #f39c12;
+}
+.metric-tag[data-metric-type="risco"][data-metric-value="Baixo"] {
+    background-color: #27ae60; /* Verde um pouco mais escuro */
+}
+/* --- Estilos Específicos para Tags de Métricas no Modo Escuro --- */
+body.dark-mode .metric-tag {
+    color: var(--white); 
+}
+/* Cores para Prioridade no Modo Escuro */
+body.dark-mode .metric-tag[data-metric-type="prioridade"][data-metric-value="Crítica"] {
+    background-color: rgba(231, 76, 60, 0.2); /* Fundo vermelho translúcido */
+    color: #ff7675; /* Texto vermelho claro/rosa para legibilidade */
+}
+body.dark-mode .metric-tag[data-metric-type="prioridade"][data-metric-value="Alta"] {
+    background-color: rgba(243, 156, 18, 0.2); /* Fundo laranja translúcido */
+    color: #fab1a0; /* Texto laranja claro */
+}
+body.dark-mode .metric-tag[data-metric-type="prioridade"][data-metric-value="Média"] {
+    background-color: rgba(93, 127, 223, 0.2); /* Fundo azul translúcido */
+    color: #74b9ff; /* Texto azul claro */
+}
+body.dark-mode .metric-tag[data-metric-type="prioridade"][data-metric-value="Baixa"] {
+    background-color: rgba(46, 204, 113, 0.15); /* Fundo verde translúcido */
+    color: #55efc4; /* Texto verde claro (menta) */
+}
+/* Cores para Complexidade no Modo Escuro */
+body.dark-mode .metric-tag[data-metric-type="complexidade"][data-metric-value="Alta"] {
+    background-color: rgba(142, 68, 173, 0.2); /* Fundo roxo translúcido */
+    color: #a29bfe; /* Texto lavanda */
+}
+body.dark-mode .metric-tag[data-metric-type="complexidade"][data-metric-value="Média"] {
+    background-color: rgba(168, 168, 168, 0.2); /* Fundo cinza translúcido */
+    color: #dfe6e9;
+}
+body.dark-mode .metric-tag[data-metric-type="complexidade"][data-metric-value="Baixa"] {
+    background-color: rgba(168, 168, 168, 0.1);
+    color: #b2bec3;
+}
+/* Cores para Risco no Modo Escuro */
+body.dark-mode .metric-tag[data-metric-type="risco"][data-metric-value="Alto"] {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #ff7675;
+}
+body.dark-mode .metric-tag[data-metric-type="risco"][data-metric-value="Médio"] {
+    background-color: rgba(241, 196, 15, 0.2);
+    color: #fab1a0;
+}
+body.dark-mode .metric-tag[data-metric-type="risco"][data-metric-value="Baixo"] {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #55efc4;
+}
+
+/* --- Componente: Tag de Status de Prazo --- */
+.prazo-tag {
+    padding: 0.25rem 0.75rem;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--white);
+}
+.prazo-tag.no-prazo {
+    background-color: #27ae60; /* Verde */
+}
+.prazo-tag.atrasado {
+    background-color: var(--danger-color); 
+}
+.prazo-tag.concluido-prazo {
+    background-color: var(--primary-color); 
+}
+.prazo-tag.concluido-atraso {
+    background-color: #f39c12; 
+}
+
+/* --- Componente: Cronograma (Timeline) --- */
+#cronograma-lista { list-style: none; }
+#cronograma-lista li { 
+    position: relative; 
+    padding: 1rem 1rem 1rem 2.5rem; 
+    border-left: 3px solid var(--border-color); 
+    transition: border-left-color 0.5s ease-out;
+}
+#cronograma-lista li::before { 
+    content: ''; 
+    position: absolute; 
+    left: -9px; 
+    top: 1.2rem; 
+    width: 15px; 
+    height: 15px; 
+    border-radius: 50%; 
+    background-color: var(--border-color); 
+    border: 3px solid var(--surface-color);
+    transition: background-color 0.5s ease-out;
+}
+#cronograma-lista li i {
+    margin-right: 0.75rem;
+    width: 20px;
+    text-align: center;
+    color: var(--text-muted-color);
+    transition: color 0.5s ease-out;
+}
+/* Estilo para itens do cronograma que já foram concluídos */
+#cronograma-lista li.completed-item {
+    border-left-color: var(--primary-color);
+}
+#cronograma-lista li.completed-item::before {
+    background-color: var(--primary-color);
+}
+#cronograma-lista li.completed-item i {
+    color: var(--primary-color);
+}
+/* Estilo para o item que acabou de ser adicionado (animação e destaque extra) */
+#cronograma-lista li.new-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInItem 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    font-weight: 600;
+}
+@keyframes slideInItem { to { opacity: 1; transform: translateX(0); } }
+
+#cronograma-lista li.new-item strong {
+    color: var(--secondary-color);
+}
+/* --- Componente: Loading Spinner --- */
+.loader { border: 5px solid var(--background-color); border-top: 5px solid var(--primary-color); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 2rem auto; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+/* --- Estilos para a Tabela do Cronograma --- */
+.timeline-table {
+    width: 100%;
+    border-collapse: collapse; /* Remove o espaçamento entre as células */
+    margin-top: 1rem;
+    font-size: 0.9rem; /* Um pouco menor para caber mais informação */
+}
+.timeline-table th, .timeline-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s; /* Adiciona transição suave para o hover */
+}
+.timeline-table th {
+    background-color: var(--background-color);
+    font-weight: 600;
+    color: var(--text-muted-color);
+}
+/* Aplica uma cor de fundo sutil a todas as linhas pares (2ª, 4ª, 6ª, etc.) */
+.timeline-table tbody tr:nth-child(even) {
+    background-color: var(--background-color);
+}
+/* Destaca a linha inteira quando o mouse passa por cima */
+.timeline-table tbody tr:hover {
+    background-color: rgba(74, 105, 189, 0.1); 
+}
+
+/* --- Melhorias no Cronograma --- */
+.log-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.log-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted-color);
+    margin-left: auto; /* Empurra para a direita */
+}
+.log-observation {
+    margin-top: 0.75rem;
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: var(--text-muted-color);
+    border-left: 3px solid var(--border-color);
+    margin-left: 8px; /* Alinha com o texto do status */
+}
+
+#cronograma-tabela {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+#cronograma-tabela th, #cronograma-tabela td {
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+#cronograma-tabela th {
+    font-weight: 600;
+    color: var(--text-muted-color);
+}
+#cronograma-tabela tbody tr:hover {
+    background-color: var(--background-color);
+}
+
+/* --- Componentes da Página de Detalhes Repaginada --- */
+.details-panel {
+    background-color: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.details-panel h2 {
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.info-list .info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.info-list .info-item:last-child {
+    border-bottom: none;
+}
+.info-item strong {
+    color: var(--text-muted-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.info-item span {
+    font-weight: 600;
+    text-align: right;
+}
+
+
+
+/* --- Componente: Modal --- */
+.modal-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 3000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+.modal-container.show { opacity: 1; visibility: visible; }
+.modal-content { background-color: var(--surface-color); padding: 2rem; border-radius: 8px; width: 90%; max-width: 450px; text-align: center; transform: scale(0.9); transition: transform 0.3s, background-color 0.3s; }
+.modal-container.show .modal-content { transform: scale(1); }
+.modal-actions { margin-top: 1.5rem; display: flex; justify-content: center; gap: 1rem; }
+.modal-btn.cancel { background-color: var(--border-color); color: var(--text-muted-color); }
+.modal-btn.confirm { background-color: var(--danger-color); color: var(--white); }
+/* --- Estilos para Inputs e Selects dentro do Modal --- */
+.modal-input, .modal-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.modal-input:focus, .modal-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.2);
+}
+
+.modal-textarea {
+    resize: vertical;
+}
+
+.modal-textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    resize: vertical; 
+}
+
+
+/* --- Componente: Notificação (Toast) --- */
+#toast-container { position: fixed; top: 80px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 10px; }
+.toast { padding: 15px 20px; border-radius: 5px; color: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px; opacity: 0; transform: translateX(100%); animation: slideInToast 0.5s forwards; }
+@keyframes slideInToast { to { opacity: 1; transform: translateX(0); } }
+.toast.success { background-color: var(--success-color); }
+.toast.error { background-color: var(--danger-color); }
+.toast.info { background-color: var(--primary-color); }
+/* --- Componente: Formulário Repaginado --- */
+.form-container {
+    background-color: var(--surface-color);
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+body.dark-mode .form-container {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem 2rem;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+    color: var(--text-muted-color);
+}
+.form-group label i {
+    color: var(--primary-color);
+}
+/* Estilo base para todos os inputs, selects e textareas */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    font-family: var(--font-family);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-muted-color);
+    opacity: 0.7;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.2);
+}
+/* Faz o select parecer mais com os outros inputs */
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

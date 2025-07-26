@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - ProjectFlow</title>
+    
+    <!-- Google Fonts, Font Awesome, CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Eruda (opcional, para debug) -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</head>
+<body>
+
+    <!-- Placeholder para o cabeçalho -->
+    <div id="main-header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-cog"></i> Configurações</h1>
+                <p>Gerenciamento do sistema e de usuários.</p>
+            </div>
+
+            <!-- Painel de Administração (visível apenas para Admins) -->
+            <div id="admin-panel" style="display: none;">
+                <div class="details-panel">
+                    <h2><i class="fas fa-users-cog"></i> Gerenciamento de Usuários</h2>
+                    <p class="panel-description">Altere o papel (role) de cada usuário no sistema.</p>
+                    <div class="table-wrapper">
+                        <table class="data-table user-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Cargo</th>
+                                    <th>Papel (Role)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-list-body">
+                                <!-- Usuários serão inseridos aqui pelo JavaScript -->
+                                <tr><td colspan="4">Carregando usuários...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mensagem para não-Admins -->
+            <div id="non-admin-message" class="empty-state" style="display: none;">
+                <i class="fas fa-lock"></i>
+                <h3>Acesso Restrito</h3>
+                <p>Apenas administradores podem acessar esta página.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Placeholders para componentes globais -->
+    <div id="toast-container"></div>
+    <div id="modal-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="js/layout-loader.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

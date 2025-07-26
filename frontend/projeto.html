@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Projeto - ProjectFlow</title>
+    
+    <!-- Google Fonts e Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <!-- Bibliotecas de Gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css">
+
+    <!-- Nosso CSS Principal (com cache buster) -->
+    <script>document.write(`<link rel="stylesheet" href="css/main.css?v=${new Date().getTime()}">`);</script>
+
+    <!-- Eruda (opcional, para debug) -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</head>
+<body>
+    <div id="main-header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- 1. CABEÇALHO DA PÁGINA -->
+            <div class="project-page-header">
+                <div class="header-main-info">
+                    <h1 id="nome-projeto">Carregando...</h1>
+                    <div id="status-atual-container"></div>
+                </div>
+                <div class="header-actions">
+                    <button id="edit-project-btn" class="btn-secondary small"><i class="fas fa-edit"></i> Editar</button>
+                    <button id="delete-project-btn" class="btn-danger small"><i class="fas fa-trash-alt"></i> Excluir</button>
+                </div>
+            </div>
+
+            <!-- 2. PAINEL DE MÉTRICAS CHAVE (KPIs) -->
+            <div class="kpi-panel">
+                <div class="kpi-item"><span class="kpi-label">Responsável</span><div id="kpi-responsavel" class="kpi-value"></div></div>
+                <div class="kpi-item"><span class="kpi-label">Prioridade</span><div id="kpi-prioridade" class="kpi-value"></div></div>
+                <div class="kpi-item"><span class="kpi-label">Saúde</span><div id="kpi-saude" class="kpi-value"></div></div>
+                <div class="kpi-item"><span class="kpi-label">Prazo</span><div id="kpi-prazo" class="kpi-value"></div></div>
+            </div>
+
+            <!-- 3. NAVEGAÇÃO POR ABAS -->
+            <div class="tabs-container">
+                <nav class="tabs-nav">
+                    <button class="tab-link active" data-tab="visao-geral">Visão Geral</button>
+                    <button class="tab-link" data-tab="cronograma">Cronograma</button>
+                    <button class="tab-link" data-tab="homologacao">Homologação</button>
+                    <button class="tab-link" data-tab="gantt">Gantt</button>
+                </nav>
+
+                <!-- CONTEÚDO DAS ABAS -->
+                <div class="tabs-content">
+                    <!-- Aba 1: Visão Geral -->
+                    <div id="visao-geral" class="tab-pane active">
+                        <p id="descricao-projeto" class="project-description"></p>
+                        <div class="details-grid">
+                            <div class="details-panel"><h2><i class="fas fa-info-circle"></i> Detalhes</h2><div id="painel-detalhes" class="info-list"></div></div>
+                            <div class="details-panel"><h2><i class="fas fa-users"></i> Equipe</h2><div id="painel-equipe" class="avatar-list"></div></div>
+                            <div class="details-panel"><h2><i class="fas fa-bullseye"></i> Objetivos</h2><div id="painel-objetivos" class="tags-list"></div></div>
+                            <div class="details-panel"><h2><i class="fas fa-dollar-sign"></i> Financeiro</h2><div id="painel-financeiro" class="info-list"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Aba 2: Cronograma e Ações -->
+                    <div id="cronograma" class="tab-pane">
+                        <div id="action-container" class="details-panel"><h2><i class="fas fa-cogs"></i> Próximas Ações</h2><div id="action-buttons" class="action-buttons"></div></div>
+                        <div class="timeline-container details-panel"><div class="timeline-header"><h2><i class="fas fa-stream"></i> Histórico de Status</h2><div class="view-toggle"><button id="view-list-btn" class="view-btn active"><i class="fas fa-list-ul"></i></button><button id="view-table-btn" class="view-btn"><i class="fas fa-table"></i></button></div></div><div id="cronograma-content"></div></div>
+                    </div>
+
+                    <!-- Aba 3: Homologação -->
+                    <div id="homologacao" class="tab-pane">
+                        <div class="details-panel"><h2><i class="fas fa-clipboard-check"></i> Histórico de Homologação</h2><div id="homologation-history"></div></div>
+                    </div>
+                    
+                    <!-- Aba 4: Gráfico de Gantt -->
+                    <div id="gantt" class="tab-pane">
+                        <div class="details-panel">
+                            <div class="panel-header">
+                                <h2><i class="fas fa-chart-bar"></i> Cronograma de Tarefas</h2>
+                                <div class="gantt-controls">
+                                    <div class="gantt-zoom-toggle">
+                                        <button class="zoom-btn" data-view-mode="Day">Dia</button>
+                                        <button class="zoom-btn active" data-view-mode="Week">Semana</button>
+                                        <button class="zoom-btn" data-view-mode="Month">Mês</button>
+                                    </div>
+                                    <button id="new-task-btn" class="btn-primary small"><i class="fas fa-plus"></i> Nova Tarefa</button>
+                                </div>
+                            </div>
+                            <div id="gantt-chart-container" class="gantt-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Placeholders e Scripts -->
+    <div id="toast-container"></div>
+    <div id="modal-placeholder"></div>
+    <script src="js/layout-loader.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

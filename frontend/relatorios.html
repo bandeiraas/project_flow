@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios - ProjectFlow</title>
+    
+    <!-- Google Fonts, Font Awesome, CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Eruda (opcional, para debug) -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</head>
+<body>
+
+    <!-- Placeholder para o cabeçalho -->
+    <div id="main-header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-chart-pie"></i> Relatórios</h1>
+                <p>Análise visual do portfólio de projetos.</p>
+            </div>
+
+            <!-- Estatísticas Rápidas -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total de Projetos</h3>
+                    <p id="stat-total-projetos">...</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Projetos Ativos</h3>
+                    <p id="stat-projetos-ativos">...</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Projetos Concluídos</h3>
+                    <p id="stat-projetos-concluidos">...</p>
+                </div>
+            </div>
+
+            <!-- Grade de Gráficos -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h2>Projetos por Status</h2>
+                    <!-- CORREÇÃO: Canvas agora dentro de um wrapper -->
+                    <div class="chart-canvas-wrapper">
+                        <canvas id="status-chart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h2>Projetos por Prioridade</h2>
+                    <!-- CORREÇÃO: Canvas agora dentro de um wrapper -->
+                    <div class="chart-canvas-wrapper">
+                        <canvas id="priority-chart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h2>Projetos por Responsável</h2>
+                    <div class="chart-canvas-wrapper">
+                        <canvas id="responsavel-chart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h2>Projetos por Área Solicitante</h2>
+                    <div class="chart-canvas-wrapper">
+                        <canvas id="area-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Placeholders para componentes globais -->
+    <div id="toast-container"></div>
+    <div id="modal-placeholder"></div>
+
+    <!-- Scripts -->
+    <!-- 1. Biblioteca Chart.js (via CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- 2. Nossos scripts da aplicação -->
+    <script src="js/layout-loader.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

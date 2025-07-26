@@ -1,0 +1,25 @@
+/* --- Componente: Details/Summary (Expansível) --- */
+.details-summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary-color);
+    padding: 0.5rem 0;
+    list-style: none; /* Remove a seta padrão em alguns navegadores */
+}
+
+.details-summary::-webkit-details-marker {
+    display: none; /* Remove a seta padrão no Chrome/Safari */
+}
+
+.details-summary::before {
+    content: '\f0da'; /* Ícone de seta para a direita do Font Awesome */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: 0.5rem;
+    transition: transform 0.2s;
+}
+
+/* Gira a seta quando o details está aberto */
+details[open] > .details-summary::before {
+    transform: rotate(90deg);
+}

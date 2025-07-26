@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ProjectFlow</title>
+    
+    <!-- Google Fonts, Font Awesome, CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Eruda (opcional, para debug) -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</head>
+<body class="login-page">
+
+    <main class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <i class="fas fa-tasks logo-icon"></i>
+                <h1>ProjectFlow</h1>
+                <p>Bem-vindo de volta! Faça login para continuar.</p>
+            </div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="senha"><i class="fas fa-lock"></i> Senha</label>
+                    <input type="password" id="senha" name="senha" required placeholder="••••••••">
+                </div>
+                <div id="error-message" class="error-message"></div>
+                <button type="submit" class="btn-primary login-btn">
+                    <span class="btn-text">Entrar</span>
+                    <div class="loader-small" style="display: none;"></div>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>Não tem uma conta? <a href="registro.html">Registre-se</a></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Componentes Globais (apenas o toast é necessário aqui) -->
+    <div id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/login.js"></script>
+</body>
+</html>

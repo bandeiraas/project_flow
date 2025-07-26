@@ -1,0 +1,53 @@
+<!-- Componente do Cabeçalho Principal -->
+<header class="main-header">
+    <div class="header-container">
+        <!-- Botão Hamburger (agora sempre visível e na esquerda) -->
+        <button type="button" id="hamburger-btn" class="hamburger-btn" aria-label="Abrir menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+
+        <!-- Logo (centralizado) -->
+        <a href="index.html" class="logo">
+            ProjectFlow
+        </a>
+
+        <!-- Ações (na direita) -->
+        <div class="header-actions">
+            <button type="button" class="new-project-btn">
+                <i class="fas fa-plus"></i> <span>Novo Projeto</span>
+            </button>
+            <button type="button" id="theme-toggle-btn" class="theme-toggle-btn"></button>
+        </div>
+    </div>
+</header>
+
+<!-- Sidebar (Menu Lateral) -->
+<aside id="sidebar" class="sidebar">
+    <!-- Seção de Navegação Principal -->
+    <div class="sidebar-nav">
+        <a href="index.html" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="insights.html" class="nav-link"><i class="fas fa-lightbulb"></i> Insights</a>
+        <a href="configuracoes.html" class="nav-link"><i class="fas fa-cog"></i> Configurações</a>
+    </div>
+
+    <!-- Seção do Perfil do Usuário (fixa no final) -->
+    <div class="sidebar-profile">
+        <a href="perfil.html" class="profile-link">
+            <div id="sidebar-avatar" class="user-avatar">
+                <!-- O avatar com a inicial será inserido aqui pelo main.js -->
+            </div>
+            <div class="profile-info">
+                <span id="sidebar-username">Carregando...</span>
+                <small id="sidebar-user-role">...</small>
+            </div>
+        </a>
+        <a href="#" id="logout-btn" class="logout-button" title="Sair">
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
+    </div>
+</aside>
+
+<!-- Overlay para o fundo escuro quando a sidebar está aberta -->
+<div id="overlay" class="overlay"></div>

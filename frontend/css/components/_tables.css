@@ -1,0 +1,134 @@
+/* --- Componente: Tabela Padrão --- */
+/* Estilos que podem ser aplicados a qualquer tabela da aplicação */
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.data-table th, .data-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table th {
+    background-color: var(--background-color);
+    font-weight: 600;
+    color: var(--text-muted-color);
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: var(--background-color);
+}
+
+.data-table tbody tr:hover {
+    background-color: rgba(74, 105, 189, 0.1);
+}
+
+/* --- Estilos Específicos para a Tabela de Usuários --- */
+/* Podemos usar a classe .user-table para adicionar estilos específicos */
+
+.user-table select {
+    padding: 0.25rem 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    cursor: pointer;
+}
+
+.user-table select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(74, 105, 189, 0.2);
+}
+/* --- Wrapper para Tabelas Responsivas --- */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto; /* A mágica acontece aqui! */
+    -webkit-overflow-scrolling: touch; /* Melhora a rolagem em iOS */
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+/* Garante que a tabela use o espaço que precisar */
+.table-wrapper table {
+    min-width: 600px; /* Força a tabela a ter uma largura mínima */
+}
+
+/* Em _tables.css ou similar */
+
+/* --- Wrapper para Tabelas Responsivas --- */
+.table-wrapper {
+    width: 100%;
+    /* A mágica acontece aqui: permite a rolagem horizontal */
+    overflow-x: auto;
+    /* Adiciona uma borda sutil para indicar que há mais conteúdo */
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+/* Garante que a tabela dentro do wrapper ocupe o espaço necessário,
+   mesmo que seja maior que a tela. */
+.table-wrapper table {
+    width: 100%;
+    min-width: 600px; /* Defina uma largura mínima para a tabela.
+                         Se a tela for menor que isso, a rolagem aparecerá.
+                         Ajuste este valor conforme necessário. */
+    border: none; /* Remove a borda da tabela, pois o wrapper já tem uma */
+}
+
+/* Melhora a aparência da barra de rolagem (opcional, mas recomendado) */
+.table-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+.table-wrapper::-webkit-scrollbar-track {
+    background: var(--background-color);
+}
+.table-wrapper::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 4px;
+}
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-muted-color);
+}
+/* Em _tables.css ou similar */
+
+/* --- Wrapper para Tabelas Responsivas --- */
+.table-wrapper {
+    width: 100%;
+    /* A mágica acontece aqui: permite a rolagem horizontal */
+    overflow-x: auto;
+    /* Adiciona uma borda sutil para indicar que há mais conteúdo */
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+/* Garante que a tabela dentro do wrapper ocupe o espaço necessário,
+   mesmo que seja maior que a tela. */
+.table-wrapper table {
+    width: 100%;
+    min-width: 600px; /* Defina uma largura mínima para a tabela.
+                         Se a tela for menor que isso, a rolagem aparecerá.
+                         Ajuste este valor conforme necessário. */
+    border: none; /* Remove a borda da tabela, pois o wrapper já tem uma */
+}
+
+/* Melhora a aparência da barra de rolagem (opcional, mas recomendado) */
+.table-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+.table-wrapper::-webkit-scrollbar-track {
+    background: var(--background-color);
+}
+.table-wrapper::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 4px;
+}
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-muted-color);
+}

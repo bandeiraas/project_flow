@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ProjectFlow</title>
+    
+    <!-- Google Fonts e Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <!-- Nosso CSS Principal -->
+    <script>
+        document.write(`<link rel="stylesheet" href="css/main.css?v=${new Date().getTime()}">`);
+    </script>
+
+    <!-- Eruda (opcional, para debug) -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</head>
+<body>
+    <!-- Placeholder para o cabeçalho -->
+    <div id="main-header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Dashboard</h1>
+                <div class="view-toggle-switch">
+                    <label for="dashboard-toggle">Visão Geral</label>
+                    <label class="switch">
+                        <input type="checkbox" id="dashboard-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <label for="dashboard-toggle">Meu Painel</label>
+                </div>
+            </div>
+
+            <!-- Container para a Visão Geral (inicialmente visível) -->
+            <div id="visao-geral-container" class="view-pane active">
+                <div class="filter-container">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Buscar por nome ou Topdesk...">
+                    </div>
+                    <div class="status-filters" id="status-filters"></div>
+                </div>
+                <div class="project-grid" id="project-grid">
+                    <!-- Cartões da Visão Geral serão inseridos aqui -->
+                </div>
+            </div>
+
+            <!-- Container para o Meu Painel (inicialmente escondido) -->
+            <div id="meu-painel-container" class="view-pane">
+                <!-- Usamos uma grade para organizar os painéis do "Meu Painel" -->
+                <div class="my-panel-grid">
+                    <div class="details-panel">
+                        <h2><i class="fas fa-tasks"></i> Minhas Tarefas Abertas</h2>
+                        <div id="minhas-tarefas-lista">
+                           <!-- Lista de tarefas será inserida aqui -->
+                        </div>
+                    </div>
+                    <div class="details-panel">
+                        <h2><i class="fas fa-briefcase"></i> Projetos Sob Minha Responsabilidade</h2>
+                        <div id="meus-projetos-grid" class="project-grid small">
+                            <!-- Cartões de projetos serão inseridos aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Placeholders para componentes globais -->
+    <div id="toast-container"></div>
+    <div id="modal-placeholder"></div>
+    
+    <!-- Scripts -->
+    <script src="js/layout-loader.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
