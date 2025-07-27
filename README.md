@@ -1,9 +1,11 @@
-# ProjectFlow - Sistema de Gestão de Projetos
+# ProjectFlow - Sistema de Gestão de Projetos e Portfólio
 
-![ProjectFlow Screenshot](https://via.placeholder.com/800x400.png?text=ProjectFlow+Dashboard)
+
 *(Sugestão: Substitua o link acima por um screenshot real do seu dashboard)*
+Com essas alterações, seu projeto está com a configuração de log mais adequada para uso geral e com uma documentação completa e profissional, pronta para ser compartilhada ou consultada no futuro.
 
-**ProjectFlow** é uma aplicação web full-stack para o gerenciamento do ciclo de vida de projetos, construída com uma arquitetura moderna e profissional. A plataforma permite o acompanhamento detalhado de projetos, desde a criação até a conclusão, com um sistema de autenticação seguro e permissões baseadas em papéis (roles).
+
+**ProjectFlow** é uma aplicação web full-stack para o gerenciamento do ciclo de vida de projetos e portfólio, construída com uma arquitetura moderna e profissional. A plataforma permite o acompanhamento detalhado de projetos, desde a criação até a conclusão, com um sistema de autenticação seguro, permissões baseadas em papéis (RBAC), e dashboards analíticos para QA e gestão de portfólio.
 
 A interface é limpa, totalmente responsiva, com modo escuro, e se adapta dinamicamente às permissões do usuário logado, oferecendo uma experiência de usuário (UX) coesa e intuitiva.
 
@@ -20,27 +22,36 @@ A interface é limpa, totalmente responsiva, com modo escuro, e se adapta dinami
     *   Três níveis de permissão: **Membro**, **Gerente** e **Admin**.
     *   A interface se adapta dinamicamente, escondendo ações não permitidas para o usuário logado.
     *   **Membros:** Podem criar e gerenciar apenas seus próprios projetos.
-    *   **Gerentes e Admins:** Têm acesso total ao portfólio de projetos.
+    *   **Gerentes e Admins:** Têm acesso total ao portfólio de projetos e relatórios.
 
-*   **Gestão de Projetos Completa (CRUD):**
+*   **Gestão de Projetos Completa:**
     *   Criação, visualização, edição e exclusão de projetos.
     *   Formulários dinâmicos gerados a partir de um esquema fornecido pelo backend, facilitando a adição de novos campos.
+    *   Associação de projetos a objetivos estratégicos, equipes e áreas.
 
-*   **Ciclo de Vida e Auditoria:**
+*   **Módulo de Homologação Avançado:**
     *   Fluxo de trabalho de status customizável.
-    *   Módulo de **Homologação** detalhado, com múltiplos ciclos de teste.
-    *   Cronograma completo (timeline) que registra **quem** fez cada mudança de status e **quando**, com observações.
+    *   Criação de múltiplos ciclos de teste por projeto.
+    *   **Upload e Parsing de Relatórios:** Anexe um relatório `.zip` do Allure e o sistema extrai automaticamente as métricas e a lista de testes executados.
+    *   Visualização detalhada dos testes de cada ciclo (aprovados, reprovados, etc.).
+    *   Criação de tarefas de correção (bugs) diretamente a partir de um teste reprovado.
 
-*   **Dashboard e Relatórios:**
-    *   Dashboard interativo com busca e filtros em tempo real.
-    *   Indicadores visuais de "saúde" do projeto (atrasado, em risco, etc.).
-    *   Página de relatórios com gráficos (pizza e barras) para análise de portfólio (Projetos por Status, Prioridade, etc.).
+*   **Gestão de Tarefas e Cronograma:**
+    *   Criação, edição e exclusão de tarefas dentro de um projeto.
+    *   Visualização do cronograma do projeto em um **Gráfico de Gantt** interativo.
+
+*   **Dashboards e Relatórios:**
+    *   **Dashboard Unificado:** Alterne entre a "Visão Geral" do portfólio e o "Meu Painel" (minhas tarefas e projetos).
+    *   **Dashboard de QA:** Análise da saúde da qualidade, com histórico de taxa de sucesso e distribuição de resultados por projeto.
+    *   **Dashboard de Portfólio:** Visão estratégica com projetos agrupados por objetivos, custos e status.
+    *   Filtros e busca em tempo real.
+    *   Cronograma completo (timeline) que registra **quem** fez cada mudança de status e **quando**, com observações.
 
 *   **UI/UX Polida:**
     *   Design limpo, moderno e totalmente responsivo.
     *   **Modo Escuro** completo e consistente.
     *   Transições de página suaves e animações sutis.
-    *   Componentes interativos como modais de confirmação e notificações (toasts).
+    *   Componentes interativos como modais, toasts e loaders.
 
 ---
 
@@ -58,7 +69,7 @@ O projeto foi desenvolvido com uma forte separação de responsabilidades entre 
     2.  **Serviço (`services/`):** Encapsula a lógica de negócio pura.
     3.  **Dados (`data_sources/` e `models/`):** Define os modelos e a interação com o banco de dados.
 *   **Configuração Centralizada:** Uso de `.env` e um arquivo `config.py` para gerenciar as configurações do ambiente.
-*   **SQLite:** Banco de dados relacional.
+*   **SQLite:** Banco de dados relacional, ideal para desenvolvimento e portabilidade.
 
 ### Frontend
 *   **Vanilla JavaScript (ES6+):** Sem frameworks, com foco em código modular e moderno.
@@ -68,32 +79,39 @@ O projeto foi desenvolvido com uma forte separação de responsabilidades entre 
     *   **Componentes Reutilizáveis:** O layout (header, modal) é carregado dinamicamente.
 *   **CSS Moderno:** Organizado em módulos (base, layout, componentes) e com uso de variáveis para temas (claro/escuro).
 *   **Chart.js:** Para a criação de gráficos interativos na página de relatórios.
+*   **Frappe Gantt:** Para a renderização do gráfico de Gantt de tarefas.
 
 ---
 
 ## 🚀 Configuração e Execução
 
-*Ambiente de desenvolvimento testado no Android com Termux.*
+*Ambiente de desenvolvimento testado em Linux (Codespaces) e Android (Termux).*
 
 ### Pré-requisitos
 *   Python 3.8+ e `pip`.
-*   (No Termux) Ferramentas de build: `pkg install rust clang make`.
-*   `live-server` (via `npm install -g live-server`).
+*   Node.js e `npm` (para o `live-server`).
+*   (Opcional, no Termux) Ferramentas de build: `pkg install rust clang make`.
 
 ### 1. Backend
 ```bash
+# Navegue até a pasta do backend
 cd backend
-# Crie um ambiente virtual (recomendado)
-# python -m venv venv
-# source venv/bin/activate
 
-# Instale as dependências
-pip install -r requirements.txt
+# Crie e ative um ambiente virtual (altamente recomendado)
+python -m venv .venv
+source .venv/bin/activate  # No Linux/macOS
+# .venv\Scripts\activate    # No Windows
 
-# Crie o arquivo .env a partir do .env.example
-cp .env.example .env
+# Instale todas as dependências a partir do arquivo
+pip install -r ../requirements.txt
 
-# Execute o servidor
+# Crie o arquivo .env na raiz do projeto (/workspaces/project_flow)
+# a partir do exemplo fornecido em backend/.env.example
+# e ajuste a JWT_SECRET_KEY.
+```
+**Para executar o servidor:**
+```bash
+# Ainda dentro da pasta 'backend'
 python app.py
 ```
 
@@ -111,13 +129,75 @@ Acesse **`http://127.0.0.1:8080/login.html`** para começar.
 
 ### `backend/requirements.txt`
 ```
-Flask
-Flask-Cors
-SQLAlchemy
-python-dotenv
-pydantic<2
-Flask-JWT-Extended
-Werkzeug
+annotated-types==0.7.0
+anyio==4.9.0
+blinker==1.9.0
+CacheControl==0.14.3
+cachetools==5.5.2
+certifi==2025.7.14
+cffi==1.17.1
+charset-normalizer==3.4.2
+click==8.2.1
+cloudevents==1.11.0
+cryptography==45.0.5
+deprecation==2.1.0
+dotenv==0.9.9
+firebase-functions==0.4.3
+firebase_admin==7.0.0
+Flask==3.1.1
+flask-cors==6.0.1
+Flask-JWT-Extended==4.7.1
+functions-framework==3.9.1
+google-api-core==2.25.1
+google-auth==2.40.3
+google-cloud-core==2.4.3
+google-cloud-firestore==2.21.0
+google-cloud-storage==3.2.0
+google-crc32c==1.7.1
+google-events==0.5.0
+google-resumable-media==2.7.2
+googleapis-common-protos==1.70.0
+greenlet==3.2.3
+grpcio==1.74.0
+grpcio-status==1.74.0
+gunicorn==23.0.0
+h11==0.16.0
+h2==4.2.0
+hpack==4.1.0
+httpcore==1.0.9
+httpx==0.28.1
+hyperframe==6.1.0
+idna==3.10
+itsdangerous==2.2.0
+Jinja2==3.1.6
+livereload==2.7.1
+MarkupSafe==3.0.2
+msgpack==1.1.1
+packaging==25.0
+proto-plus==1.26.1
+protobuf==6.31.1
+pyasn1==0.6.1
+pyasn1_modules==0.4.2
+pycparser==2.22
+pydantic==2.11.7
+pydantic_core==2.33.2
+PyJWT==2.10.1
+python-dotenv==1.1.1
+PyYAML==6.0.2
+requests==2.32.4
+rsa==4.9.1
+sniffio==1.3.1
+SQLAlchemy==2.0.41
+starlette==0.47.2
+tornado==6.5.1
+typing-inspection==0.4.1
+typing_extensions==4.14.1
+urllib3==2.5.0
+uvicorn==0.35.0
+uvicorn-worker==0.3.0
+watchdog==6.0.0
+Werkzeug==3.1.3
+
 ```
 
 ### `backend/.env.example` (Exemplo)
@@ -131,11 +211,17 @@ JWT_SECRET_KEY="sua-chave-secreta-super-forte-aqui"
 
 ## 🔮 Próximos Passos
 
-*   [X] **CRUD Completo**
-*   [X] **Autenticação com JWT**
-*   [X] **Sistema de Permissões (RBAC)**
-*   [ ] **Auditoria Completa:** Usar o ID do usuário do token em todas as operações.
-*   [ ] **Gráfico de Gantt:** Implementar um cronograma de tarefas.
+### Funcionalidades
 *   [ ] **Página de Administração:** UI para gerenciar usuários e papéis.
-*   [ ] **Testes Automatizados:** Adicionar testes unitários e de integração.
+*   [ ] **Notificações por Email:** Enviar alertas sobre prazos e mudanças de status.
+
+### Testes e Qualidade
+*   [ ] **Testes Automatizados:** Adicionar testes unitários e de integração para garantir a estabilidade.
+
+### Melhorias de Arquitetura e Refatoração (Backend)
+*   [ ] **Centralizar Gerenciamento de Sessão:** Usar hooks do Flask para gerenciar sessões do DB automaticamente, removendo código repetitivo das rotas.
+*   [ ] **Adotar Enums:** Substituir "magic strings" (ex: status, roles) por Enums para maior segurança e legibilidade do código.
+*   [ ] **Decoradores de Permissão:** Refatorar a lógica de verificação de permissões para decoradores personalizados (ex: `@permission_required`).
+*   [ ] **Configuração de CORS para Produção:** Tornar a política de CORS mais restritiva usando variáveis de ambiente.
+*   [ ] **Otimizar Reloader:** Configurar o reloader do Flask para ignorar a pasta `uploads` e melhorar a experiência de desenvolvimento.
 ```

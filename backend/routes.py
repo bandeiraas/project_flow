@@ -607,7 +607,7 @@ def register_routes(app):
     def upload_relatorio_homologacao_route(id_homologacao):
         usuario_atual = get_usuario_atual()
         # TODO: Adicionar verificação de permissão
-
+        
         if 'reportFile' not in request.files:
             abort(400, description="Nenhum arquivo enviado.")
         

@@ -1,11 +1,14 @@
 import os
 from dotenv import load_dotenv
 
-# Carrega as variáveis do arquivo .env para o ambiente
-load_dotenv()
-
 # Pega o caminho absoluto do diretório onde config.py está
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+# --- CARREGAMENTO DO .ENV A PARTIR DA RAIZ DO PROJETO ---
+# Constrói o caminho para o arquivo .env na pasta pai (raiz do projeto)
+dotenv_path = os.path.join(basedir, '..', '.env')
+# Carrega as variáveis do arquivo .env especificado
+load_dotenv(dotenv_path=dotenv_path)
 
 class Config:
     """
@@ -28,5 +31,7 @@ class Config:
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'super-secret-key-change-in-production')  
     
     
+    # Define um limite de 16MB para o tamanho dos uploads para evitar sobrecarga.
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024
     UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
     
