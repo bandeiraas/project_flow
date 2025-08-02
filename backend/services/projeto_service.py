@@ -7,6 +7,7 @@ from models import Projeto, StatusLog, Usuario, ObjetivoEstrategico
 from models.usuario_model import Usuario
 from data_sources.sqlite_source import get_all_projetos, get_projeto_by_id
 from sqlalchemy.orm import joinedload
+from utils.database import get_db_session, with_db_session, DatabaseManager
 
 logger = logging.getLogger(__name__)
 
@@ -14,25 +15,35 @@ logger = logging.getLogger(__name__)
 class BaseService:
     """
     Classe base para serviços que gerencia o ciclo de vida da sessão do DB.
+    Refatorada para usar o novo sistema de gestão de sessões.
     """
 
     def __init__(self):
-        self.session = db.get_session()
-        logger.debug(f"Sessão do DB {id(self.session)} aberta para {self.__class__.__name__}.")
+        # Não abre sessão no __init__ mais, usa context managers
+        self.session = None
+        logger.debug(f"BaseService {self.__class__.__name__} inicializado")
 
     def __enter__(self):
+        # Usa o DatabaseManager para gestão automática
+        self.db_manager = DatabaseManager()
+        self.db_manager.__enter__()
+        self.session = self.db_manager.session
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        try:
-            if exc_type:
-                logger.error(f"Exceção no serviço. Realizando rollback.", exc_info=(exc_type, exc_val, exc_tb))
-                self.session.rollback()
-            else:
-                self.session.commit()
-        finally:
-            self.session.close()
-            logger.debug(f"Sessão do DB {id(self.session)} fechada.")
+        if hasattr(self, 'db_manager'):
+            return self.db_manager.__exit__(exc_type, exc_val, exc_tb)
+    
+    def execute_with_session(self, func, *args, **kwargs):
+        """
+        Executa uma função com a sessão atual do serviço.
+        Se não houver sessão ativa, cria uma temporária.
+        """
+        if self.session:
+            return func(self.session, *args, **kwargs)
+        else:
+            with get_db_session() as session:
+                return func(session, *args, **kwargs)
 
 
 class ProjetoService(BaseService):
@@ -46,64 +57,69 @@ class ProjetoService(BaseService):
     def get_relatorio_portfolio(self, usuario: Usuario) -> List[Dict]:
         """
         Gera os dados para o dashboard de portfólio, agrupando projetos por objetivo.
+        Refatorado para usar o novo sistema de gestão de sessões.
         """
-        logger.info(f"Serviço: get_relatorio_portfolio para o usuário ID {usuario.id_usuario}")
+        def _generate_portfolio(session):
+            logger.info(f"Serviço: get_relatorio_portfolio para o usuário ID {usuario.id_usuario}")
+            
+            objetivos = session.query(ObjetivoEstrategico).filter_by(status='Ativo').all()
+            
+            todos_projetos_visiveis = get_all_projetos(session)
+            if usuario.role == 'Membro':
+                todos_projetos_visiveis = [p for p in todos_projetos_visiveis if p.id_responsavel == usuario.id_usuario]
+
+            portfolio_data = []
+            for objetivo in objetivos:
+                projetos_do_objetivo = [
+                    p for p in todos_projetos_visiveis if objetivo in p.objetivos_estrategicos
+                ]
+                
+                if not projetos_do_objetivo:
+                    continue
+
+                custo_total_estimado = sum(p.custo_estimado or 0 for p in projetos_do_objetivo)
+                
+                status_counts = {}
+                for p in projetos_do_objetivo:
+                    status_counts[p.status_atual] = status_counts.get(p.status_atual, 0) + 1
+
+                objetivo_dict = objetivo.para_dicionario()
+                objetivo_dict['projetos'] = [p.para_dicionario() for p in projetos_do_objetivo]
+                objetivo_dict['total_projetos'] = len(projetos_do_objetivo)
+                objetivo_dict['custo_total_estimado'] = custo_total_estimado
+                
+                # --- CORREÇÃO CRÍTICA AQUI ---
+                # Monta a estrutura de dados no formato que o Chart.js espera
+                objetivo_dict['grafico_status'] = {
+                    'labels': list(status_counts.keys()),
+                    'datasets': [{
+                        'data': list(status_counts.values())
+                    }]
+                }
+                
+                portfolio_data.append(objetivo_dict)
+                
+            return portfolio_data
         
-        objetivos = self.session.query(ObjetivoEstrategico).filter_by(status='Ativo').all()
-        
-        todos_projetos_visiveis = get_all_projetos(self.session)
-        if usuario.role == 'Membro':
-            todos_projetos_visiveis = [p for p in todos_projetos_visiveis if p.id_responsavel == usuario.id_usuario]
+        return self.execute_with_session(_generate_portfolio)
 
-        portfolio_data = []
-        for objetivo in objetivos:
-            projetos_do_objetivo = [
-                p for p in todos_projetos_visiveis if objetivo in p.objetivos_estrategicos
-            ]
-            
-            if not projetos_do_objetivo:
-                continue
-
-            custo_total_estimado = sum(p.custo_estimado or 0 for p in projetos_do_objetivo)
-            
-            status_counts = {}
-            for p in projetos_do_objetivo:
-                status_counts[p.status_atual] = status_counts.get(p.status_atual, 0) + 1
-
-            objetivo_dict = objetivo.para_dicionario()
-            objetivo_dict['projetos'] = [p.para_dicionario() for p in projetos_do_objetivo]
-            objetivo_dict['total_projetos'] = len(projetos_do_objetivo)
-            objetivo_dict['custo_total_estimado'] = custo_total_estimado
-            
-            # --- CORREÇÃO CRÍTICA AQUI ---
-            # Monta a estrutura de dados no formato que o Chart.js espera
-            objetivo_dict['grafico_status'] = {
-                'labels': list(status_counts.keys()),
-                'datasets': [{
-                    'data': list(status_counts.values())
-                }]
-            }
-            
-            portfolio_data.append(objetivo_dict)
-            
-        return portfolio_data
-
-    def get_all_for_user(self, usuario: Usuario) -> List[Dict]:
-        """Busca todos os projetos, aplicando as regras de permissão."""
+    @with_db_session
+    def get_all_for_user(self, session, usuario: Usuario) -> List[Dict]:
+        """
+        Busca todos os projetos, aplicando as regras de permissão.
+        Refatorado para usar o decorator @with_db_session.
+        """
         logger.info(f"Serviço: get_all_for_user para o usuário ID {usuario.id_usuario} ({usuario.role})")
-        session = db.get_session()
-        try:
-            todos_projetos = get_all_projetos(session)
+        
+        todos_projetos = get_all_projetos(session)
 
-            if usuario.role in ['Admin', 'Gerente']:
-                projetos_visiveis = todos_projetos
-            else:
-                projetos_visiveis = [p for p in todos_projetos if p.id_responsavel == usuario.id_usuario]
+        if usuario.role in ['Admin', 'Gerente']:
+            projetos_visiveis = todos_projetos
+        else:
+            projetos_visiveis = [p for p in todos_projetos if p.id_responsavel == usuario.id_usuario]
 
-            logger.info(f"Retornando {len(projetos_visiveis)} projetos visíveis para o usuário.")
-            return [p.para_dicionario() for p in projetos_visiveis]
-        finally:
-            session.close()
+        logger.info(f"Retornando {len(projetos_visiveis)} projetos visíveis para o usuário.")
+        return [p.para_dicionario() for p in projetos_visiveis]
 
     def get_by_id(self, id_projeto: int) -> Dict | None:
         """Busca um projeto por ID."""
