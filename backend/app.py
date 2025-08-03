@@ -1,146 +1,114 @@
-import logging
+#!/usr/bin/env python3
+"""Servidor Flask simples para testar CORS"""
+
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 import os
-from flask import Flask, request, g
-from config import get_config
-from extensions import db, cors, jwt
+import sys
 
-# Importa a função que registra as rotas
-from routes import register_routes
+app = Flask(__name__)
 
-# Importa o middleware CORS personalizado
-from utils.cors_middleware import setup_flexible_cors
+# CORS muito permissivo para teste
+CORS(app, 
+     origins="*",
+     allow_headers="*", 
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+     supports_credentials=True)
 
+@app.route('/')
+def home():
+    return jsonify({
+        "message": "Backend funcionando!",
+        "port": 5000,
+        "cors": "enabled"
+    })
 
-def create_app(config_name=None):
-    """
-    Application Factory: cria e configura a instância do app Flask.
+@app.route('/api/usuarios')
+def usuarios():
+    return jsonify({
+        "message": "Endpoint usuarios funcionando!",
+        "data": []
+    })
+
+@app.route('/api/auth/login', methods=['POST', 'OPTIONS'])
+def login():
+    if request.method == 'OPTIONS':
+        return '', 200
     
-    Args:
-        config_name: Nome da configuração a ser usada (development, testing, production)
-                    Se None, usa a configuração baseada em FLASK_ENV
-    """
-    app = Flask(__name__)
+    return jsonify({
+        "message": "Login endpoint funcionando!",
+        "access_token": "test_token_123"
+    })
+
+@app.route('/api/auth/me', methods=['GET', 'OPTIONS'])
+def me():
+    if request.method == 'OPTIONS':
+        return '', 200
     
-    # Carrega a configuração apropriada
-    if config_name:
-        from config import config
-        config_class = config.get(config_name, config['default'])
-    else:
-        config_class = get_config()
+    # Simula verificação de token (em produção seria real)
+    auth_header = request.headers.get('Authorization')
     
-    app.config.from_object(config_class)
+    if not auth_header or not auth_header.startswith('Bearer '):
+        return jsonify({"error": "Token não fornecido"}), 401
     
-    # Chama init_app se existir (para configurações específicas de produção)
-    if hasattr(config_class, 'init_app'):
-        config_class.init_app(app)
+    # Simula dados do usuário autenticado
+    return jsonify({
+        "message": "Dados do usuário autenticado",
+        "user": {
+            "id": 1,
+            "email": "usuario@exemplo.com",
+            "nome": "Usuário Teste",
+            "role": "user"
+        }
+    })
 
-    # --- GARANTIR QUE A PASTA DE UPLOAD EXISTA ---
-    if not os.path.exists(app.config['UPLOAD_FOLDER']):
-        os.makedirs(app.config['UPLOAD_FOLDER'])
-        app.logger.info(f"Pasta de upload criada em: {app.config['UPLOAD_FOLDER']}")
-
-    # --- INICIALIZAÇÃO DAS EXTENSÕES ---
-    db.init_app(app)
+# Adiciona outras rotas do app.py
+@app.route('/api/usuarios', methods=['GET', 'OPTIONS'])
+def usuarios():
+    if request.method == 'OPTIONS':
+        return '', 200
     
-    # Configuração de CORS mais flexível para desenvolvimento
-    cors_origins = app.config.get('CORS_ORIGINS', ['http://localhost:3000'])
+    return jsonify({
+        "message": "Endpoint usuarios funcionando!",
+        "data": []
+    })
+
+@app.route('/api/projetos', methods=['GET', 'OPTIONS'])
+def projetos():
+    if request.method == 'OPTIONS':
+        return '', 200
     
-    # Em desenvolvimento, permite GitHub Codespaces com padrão mais flexível
-    if app.config.get('FLASK_ENV') == 'development':
-        # Adiciona suporte para qualquer subdomínio do GitHub Codespaces
-        cors_origins.extend([
-            'https://*.app.github.dev',
-            'https://*.githubpreview.dev',
-            'https://*.github.dev'
-        ])
-        
-        # Log das origens permitidas para debug
-        app.logger.info(f"CORS Origins configuradas: {cors_origins}")
+    return jsonify({
+        "message": "Endpoint projetos funcionando!",
+        "data": []
+    })
+
+@app.before_request
+def log_request():
+    print(f"📥 {request.method} {request.path} - Origin: {request.headers.get('Origin', 'None')}")
+
+@app.after_request
+def after_request(response):
+    print(f"📤 Response: {response.status_code}")
+    return response
+
+if __name__ == '__main__':
+    print("🚀 Iniciando servidor simples...")
+    print("🌐 Acessível em:")
+    print("   - http://localhost:5000")
     
-    # CORS muito permissivo para desenvolvimento (igual ao simple_server.py)
-    cors.init_app(
-        app,
-        origins="*",
-        allow_headers="*", 
-        methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-        supports_credentials=True
-    )
+    if os.environ.get('CODESPACES'):
+        codespace = os.environ.get('CODESPACE_NAME', 'codespace')
+        print(f"   - https://{codespace}-5000.app.github.dev")
     
-    # CORS já configurado acima de forma permissiva
-    
-    jwt.init_app(app)
-
-    # --- CONFIGURAÇÃO DO LOGGING ---
-    logging.basicConfig(
-        level=getattr(logging, app.config['LOG_LEVEL']), 
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
-    logger = logging.getLogger(__name__)
-    logger.info(f"Aplicação Flask criada. Ambiente: {app.config.get('FLASK_ENV', 'development')}")
-    logger.info(f"Banco de dados: {app.config['DATABASE_URL']}")
-
-    # --- HOOKS DE GERENCIAMENTO DE SESSÃO ---
-    @app.teardown_appcontext
-    def shutdown_session(exception=None):
-        """Fecha a sessão do banco de dados ao final da requisição."""
-        from utils.database import close_session_on_teardown
-        close_session_on_teardown()
-
-    # --- REGISTRO DAS ROTAS ---
-    register_routes(app)
-
-    # --- DEBUGGING HOOK (apenas em desenvolvimento) ---
-    if app.config.get('DEBUG', False):
-        @app.before_request
-        def log_request_info():
-            print(f"📥 {request.method} {request.path} - Origin: {request.headers.get('Origin', 'None')}")
-            app.logger.debug(f"Request: {request.method} {request.path} - Headers: {dict(request.headers)}")
-            if request.headers.get('Origin'):
-                app.logger.debug(f"Origin: {request.headers.get('Origin')}")
-        
-        @app.after_request
-        def after_request(response):
-            print(f"📤 Response: {response.status_code}")
-            return response
-
-    # --- TRATAMENTO DE ERROS GLOBAL ---
-    @app.errorhandler(400)
-    def bad_request(error):
-        return {'error': 'Requisição inválida', 'message': str(error.description)}, 400
-
-    @app.errorhandler(401)
-    def unauthorized(error):
-        return {'error': 'Não autorizado', 'message': 'Token de acesso inválido ou expirado'}, 401
-
-    @app.errorhandler(403)
-    def forbidden(error):
-        return {'error': 'Acesso negado', 'message': 'Você não tem permissão para acessar este recurso'}, 403
-
-    @app.errorhandler(404)
-    def not_found(error):
-        return {'error': 'Recurso não encontrado', 'message': str(error.description)}, 404
-
-    @app.errorhandler(500)
-    def internal_error(error):
-        app.logger.error(f"Erro interno do servidor: {error}")
-        return {'error': 'Erro interno do servidor', 'message': 'Algo deu errado. Tente novamente mais tarde.'}, 500
-
-    return app
-
-
-# --- PONTO DE ENTRADA DA APLICAÇÃO ---
-if __name__ == "__main__":
-    # Cria a instância da aplicação usando a fábrica
-    app = create_app()
-    
-    # Configurações do servidor baseadas no ambiente
-    debug_mode = app.config.get('DEBUG', False)
-    
-    # Executa o servidor de desenvolvimento
-    app.run(
-        host='0.0.0.0', 
-        port=5000, 
-        debug=debug_mode, 
-        use_reloader=debug_mode  # Só usa reloader em modo debug
-    )
-           
+    try:
+        app.run(
+            host='0.0.0.0',
+            port=5000,
+            debug=False,
+            use_reloader=False,
+            threaded=True
+        )
+    except Exception as e:
+        print(f"❌ Erro: {e}")
+        sys.exit(1)
