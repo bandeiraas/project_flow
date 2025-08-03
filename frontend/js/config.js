@@ -9,10 +9,18 @@ const isCodespaces = window.location.hostname.includes('.app.github.dev');
 let API_BASE_URL;
 
 if (isCodespaces) {
-    // Em GitHub Codespaces, usa a URL atual mas troca a porta para 5000
-    const currentUrl = window.location.origin;
-    // Substitui a porta atual por 5000 para o backend
-    API_BASE_URL = currentUrl.replace(/:\d+/, '') + '-5000.app.github.dev/api';
+    // Em GitHub Codespaces, extrai o nome do codespace e constrói a URL do backend
+    const hostname = window.location.hostname;
+    console.log('🔍 Hostname atual:', hostname);
+    
+    // Extrai o nome base do codespace (parte antes da primeira porta)
+    // Exemplo: "stunning-happiness-wqxqv69j6xfg956-8080.app.github.dev" 
+    // -> "stunning-happiness-wqxqv69j6xfg956"
+    const codespaceName = hostname.split('-').slice(0, -1).join('-');
+    console.log('📝 Nome do codespace extraído:', codespaceName);
+    
+    // Constrói a URL do backend na porta 5000
+    API_BASE_URL = `https://${codespaceName}-5000.app.github.dev/api`;
 } else {
     // Em desenvolvimento local, usa localhost
     API_BASE_URL = 'http://localhost:5000/api';
