@@ -1,23 +1,18 @@
+#!/usr/bin/env python3
+"""Versão simplificada do app.py que funciona igual ao simple_server.py"""
+
 import logging
 import os
-from flask import Flask, request, g
+from flask import Flask, request, g, jsonify
 from config import get_config
 from extensions import db, cors, jwt
 
 # Importa a função que registra as rotas
 from routes import register_routes
 
-# Importa o middleware CORS personalizado
-from utils.cors_middleware import setup_flexible_cors
-
-
 def create_app(config_name=None):
     """
     Application Factory: cria e configura a instância do app Flask.
-    
-    Args:
-        config_name: Nome da configuração a ser usada (development, testing, production)
-                    Se None, usa a configuração baseada em FLASK_ENV
     """
     app = Flask(__name__)
     
@@ -42,22 +37,7 @@ def create_app(config_name=None):
     # --- INICIALIZAÇÃO DAS EXTENSÕES ---
     db.init_app(app)
     
-    # Configuração de CORS mais flexível para desenvolvimento
-    cors_origins = app.config.get('CORS_ORIGINS', ['http://localhost:3000'])
-    
-    # Em desenvolvimento, permite GitHub Codespaces com padrão mais flexível
-    if app.config.get('FLASK_ENV') == 'development':
-        # Adiciona suporte para qualquer subdomínio do GitHub Codespaces
-        cors_origins.extend([
-            'https://*.app.github.dev',
-            'https://*.githubpreview.dev',
-            'https://*.github.dev'
-        ])
-        
-        # Log das origens permitidas para debug
-        app.logger.info(f"CORS Origins configuradas: {cors_origins}")
-    
-    # CORS muito permissivo para desenvolvimento (igual ao simple_server.py)
+    # CORS muito permissivo (igual ao simple_server.py)
     cors.init_app(
         app,
         origins="*",
@@ -65,8 +45,6 @@ def create_app(config_name=None):
         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
         supports_credentials=True
     )
-    
-    # CORS já configurado acima de forma permissiva
     
     jwt.init_app(app)
 
@@ -89,19 +67,15 @@ def create_app(config_name=None):
     # --- REGISTRO DAS ROTAS ---
     register_routes(app)
 
-    # --- DEBUGGING HOOK (apenas em desenvolvimento) ---
-    if app.config.get('DEBUG', False):
-        @app.before_request
-        def log_request_info():
-            print(f"📥 {request.method} {request.path} - Origin: {request.headers.get('Origin', 'None')}")
-            app.logger.debug(f"Request: {request.method} {request.path} - Headers: {dict(request.headers)}")
-            if request.headers.get('Origin'):
-                app.logger.debug(f"Origin: {request.headers.get('Origin')}")
-        
-        @app.after_request
-        def after_request(response):
-            print(f"📤 Response: {response.status_code}")
-            return response
+    # --- DEBUGGING HOOK (igual ao simple_server.py) ---
+    @app.before_request
+    def log_request():
+        print(f"📥 {request.method} {request.path} - Origin: {request.headers.get('Origin', 'None')}")
+
+    @app.after_request
+    def after_request(response):
+        print(f"📤 Response: {response.status_code}")
+        return response
 
     # --- TRATAMENTO DE ERROS GLOBAL ---
     @app.errorhandler(400)
@@ -133,14 +107,19 @@ if __name__ == "__main__":
     # Cria a instância da aplicação usando a fábrica
     app = create_app()
     
-    # Configurações do servidor baseadas no ambiente
-    debug_mode = app.config.get('DEBUG', False)
+    print("🚀 Iniciando servidor simplificado...")
+    print("🌐 Acessível em:")
+    print("   - http://localhost:5000")
+    
+    if os.environ.get('CODESPACES'):
+        codespace = os.environ.get('CODESPACE_NAME', 'codespace')
+        print(f"   - https://{codespace}-5000.app.github.dev")
     
     # Executa o servidor de desenvolvimento
     app.run(
         host='0.0.0.0', 
         port=5000, 
-        debug=debug_mode, 
-        use_reloader=debug_mode  # Só usa reloader em modo debug
+        debug=False,
+        use_reloader=False,
+        threaded=True
     )
-           
