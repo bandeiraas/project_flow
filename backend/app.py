@@ -47,7 +47,8 @@ def create_app(config_name=None):
         origins="*",
         allow_headers="*", 
         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-        supports_credentials=True
+        supports_credentials=True,
+        expose_headers=["Content-Type", "Authorization"]
     )
     
     jwt.init_app(app)
@@ -70,6 +71,17 @@ def create_app(config_name=None):
 
     # --- REGISTRO DAS ROTAS ---
     register_routes(app)
+    
+    # Rota de teste para verificar se o servidor está funcionando
+    @app.route('/test', methods=['GET', 'OPTIONS'])
+    def test():
+        if request.method == 'OPTIONS':
+            return '', 200
+        return jsonify({
+            "message": "Servidor funcionando!",
+            "status": "ok",
+            "cors": "enabled"
+        })
 
     # --- DEBUGGING HOOK (igual ao simple_server.py) ---
     @app.before_request
@@ -113,16 +125,16 @@ if __name__ == "__main__":
     
     print("🚀 Iniciando servidor...")
     print("🌐 Acessível em:")
-    print("   - http://localhost:5001")
+    print("   - http://localhost:5000")
     
     if os.environ.get('CODESPACES'):
         codespace = os.environ.get('CODESPACE_NAME', 'codespace')
-        print(f"   - https://{codespace}-5001.app.github.dev")
+        print(f"   - https://{codespace}-5000.app.github.dev")
     
     # Executa o servidor de desenvolvimento
     app.run(
         host='0.0.0.0', 
-        port=5001, 
+        port=5000, 
         debug=False,
         use_reloader=False,
         threaded=True
