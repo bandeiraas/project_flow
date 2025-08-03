@@ -7,6 +7,9 @@ from extensions import db, cors, jwt
 # Importa a função que registra as rotas
 from routes import register_routes
 
+# Importa o middleware CORS personalizado
+from utils.cors_middleware import setup_flexible_cors
+
 
 def create_app(config_name=None):
     """
@@ -39,18 +42,41 @@ def create_app(config_name=None):
     # --- INICIALIZAÇÃO DAS EXTENSÕES ---
     db.init_app(app)
     
-    # Configuração de CORS mais segura
+    # Configuração de CORS mais flexível para desenvolvimento
+    cors_origins = app.config.get('CORS_ORIGINS', ['http://localhost:3000'])
+    
+    # Em desenvolvimento, permite GitHub Codespaces com padrão mais flexível
+    if app.config.get('FLASK_ENV') == 'development':
+        # Adiciona suporte para qualquer subdomínio do GitHub Codespaces
+        cors_origins.extend([
+            'https://*.app.github.dev',
+            'https://*.githubpreview.dev',
+            'https://*.github.dev'
+        ])
+        
+        # Log das origens permitidas para debug
+        app.logger.info(f"CORS Origins configuradas: {cors_origins}")
+    
     cors.init_app(
         app,
-        origins=app.config.get('CORS_ORIGINS', ['http://localhost:3000']),
+        origins=cors_origins,
         allow_headers=[
             "Content-Type", 
             "Authorization", 
-            "Access-Control-Allow-Credentials"
+            "Access-Control-Allow-Credentials",
+            "Accept",
+            "Origin",
+            "X-Requested-With"
         ],
         supports_credentials=True,
-        methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+        methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+        # Permite qualquer header em desenvolvimento
+        allow_all_headers=app.config.get('FLASK_ENV') == 'development'
     )
+    
+    # Adiciona middleware CORS personalizado para máxima compatibilidade
+    if app.config.get('FLASK_ENV') == 'development':
+        setup_flexible_cors(app)
     
     jwt.init_app(app)
 
@@ -78,6 +104,8 @@ def create_app(config_name=None):
         @app.before_request
         def log_request_info():
             app.logger.debug(f"Request: {request.method} {request.path} - Headers: {dict(request.headers)}")
+            if request.headers.get('Origin'):
+                app.logger.debug(f"Origin: {request.headers.get('Origin')}")
 
     # --- TRATAMENTO DE ERROS GLOBAL ---
     @app.errorhandler(400)
