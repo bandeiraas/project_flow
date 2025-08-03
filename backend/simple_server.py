@@ -40,6 +40,28 @@ def login():
         "access_token": "test_token_123"
     })
 
+@app.route('/api/auth/me', methods=['GET', 'OPTIONS'])
+def me():
+    if request.method == 'OPTIONS':
+        return '', 200
+    
+    # Simula verificação de token (em produção seria real)
+    auth_header = request.headers.get('Authorization')
+    
+    if not auth_header or not auth_header.startswith('Bearer '):
+        return jsonify({"error": "Token não fornecido"}), 401
+    
+    # Simula dados do usuário autenticado
+    return jsonify({
+        "message": "Dados do usuário autenticado",
+        "user": {
+            "id": 1,
+            "email": "usuario@exemplo.com",
+            "nome": "Usuário Teste",
+            "role": "user"
+        }
+    })
+
 @app.before_request
 def log_request():
     print(f"📥 {request.method} {request.path} - Origin: {request.headers.get('Origin', 'None')}")
