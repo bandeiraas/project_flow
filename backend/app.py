@@ -57,22 +57,30 @@ def create_app(config_name=None):
         # Log das origens permitidas para debug
         app.logger.info(f"CORS Origins configuradas: {cors_origins}")
     
-    cors.init_app(
-        app,
-        origins=cors_origins,
-        allow_headers=[
-            "Content-Type", 
-            "Authorization", 
-            "Access-Control-Allow-Credentials",
-            "Accept",
-            "Origin",
-            "X-Requested-With"
-        ],
-        supports_credentials=True,
-        methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-        # Permite qualquer header em desenvolvimento
-        allow_all_headers=app.config.get('FLASK_ENV') == 'development'
-    )
+    # CORS muito permissivo para desenvolvimento (igual ao simple_server.py)
+    if app.config.get('FLASK_ENV') == 'development':
+        cors.init_app(
+            app,
+            origins="*",
+            allow_headers="*", 
+            methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+            supports_credentials=True
+        )
+    else:
+        cors.init_app(
+            app,
+            origins=cors_origins,
+            allow_headers=[
+                "Content-Type", 
+                "Authorization", 
+                "Access-Control-Allow-Credentials",
+                "Accept",
+                "Origin",
+                "X-Requested-With"
+            ],
+            supports_credentials=True,
+            methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH']
+        )
     
     # Adiciona middleware CORS personalizado para máxima compatibilidade
     if app.config.get('FLASK_ENV') == 'development':
@@ -103,9 +111,15 @@ def create_app(config_name=None):
     if app.config.get('DEBUG', False):
         @app.before_request
         def log_request_info():
+            print(f"📥 {request.method} {request.path} - Origin: {request.headers.get('Origin', 'None')}")
             app.logger.debug(f"Request: {request.method} {request.path} - Headers: {dict(request.headers)}")
             if request.headers.get('Origin'):
                 app.logger.debug(f"Origin: {request.headers.get('Origin')}")
+        
+        @app.after_request
+        def after_request(response):
+            print(f"📤 Response: {response.status_code}")
+            return response
 
     # --- TRATAMENTO DE ERROS GLOBAL ---
     @app.errorhandler(400)
