@@ -1,22 +1,18 @@
+#!/usr/bin/env python3
+"""Versão simplificada do app.py que funciona igual ao simple_server.py"""
+
 import logging
 import os
-from flask import Flask, request, g
+from flask import Flask, request, g, jsonify
 from config import get_config
 from extensions import db, cors, jwt
 
 # Importa a função que registra as rotas
 from routes import register_routes
 
-# CORS configurado diretamente no app
-
-
 def create_app(config_name=None):
     """
     Application Factory: cria e configura a instância do app Flask.
-    
-    Args:
-        config_name: Nome da configuração a ser usada (development, testing, production)
-                    Se None, usa a configuração baseada em FLASK_ENV
     """
     app = Flask(__name__)
     
@@ -47,8 +43,7 @@ def create_app(config_name=None):
         origins="*",
         allow_headers="*", 
         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-        supports_credentials=True,
-        expose_headers=["Content-Type", "Authorization"]
+        supports_credentials=True
     )
     
     jwt.init_app(app)
@@ -71,17 +66,6 @@ def create_app(config_name=None):
 
     # --- REGISTRO DAS ROTAS ---
     register_routes(app)
-    
-    # Rota de teste para verificar se o servidor está funcionando
-    @app.route('/test', methods=['GET', 'OPTIONS'])
-    def test():
-        if request.method == 'OPTIONS':
-            return '', 200
-        return jsonify({
-            "message": "Servidor funcionando!",
-            "status": "ok",
-            "cors": "enabled"
-        })
 
     # --- DEBUGGING HOOK (igual ao simple_server.py) ---
     @app.before_request
@@ -123,7 +107,7 @@ if __name__ == "__main__":
     # Cria a instância da aplicação usando a fábrica
     app = create_app()
     
-    print("🚀 Iniciando servidor...")
+    print("🚀 Iniciando servidor simplificado...")
     print("🌐 Acessível em:")
     print("   - http://localhost:5000")
     
@@ -139,4 +123,3 @@ if __name__ == "__main__":
         use_reloader=False,
         threaded=True
     )
-           
