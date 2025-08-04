@@ -16,7 +16,9 @@ async function _handleApiError(response) {
             errorMessage = errorData.message;
         }
     } catch (e) {
-        // Se não conseguir ler o JSON, usa a mensagem padrão
+        // Se não conseguir ler o JSON, usa a mensagem padrão.
+        // Logar o erro de parsing é útil para depuração.
+        console.warn('[apiService] Falha ao analisar o corpo do erro como JSON.', e);
     }
     
     const error = new Error(errorMessage);
