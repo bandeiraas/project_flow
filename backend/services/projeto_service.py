@@ -156,7 +156,7 @@ class ProjetoService(BaseService):
                 prioridade=dados_projeto.get('prioridade'),
                 complexidade=dados_projeto.get('complexidade'),
                 risco=dados_projeto.get('risco'),
-                custo_estimado=float(dados_projeto.get('custo_estimado', 0.0) or 0.0),
+                custo_estimado=float(dados_projeto.get('custo_estimado', 0.0) if dados_projeto.get('custo_estimado') is not None else 0.0),
                 link_documentacao=dados_projeto.get('link_documentacao'),
                 data_inicio_prevista=dados_projeto.get('data_inicio_prevista'),
                 data_fim_prevista=dados_projeto.get('data_fim_prevista')
@@ -249,7 +249,7 @@ class ProjetoService(BaseService):
             projeto.objetivos_estrategicos = objetivos
 
         # --- CONVERSÃO DE TIPO PARA CUSTO ---
-        if 'custo_estimado' in dados_atualizacao and dados_atualizacao['custo_estimado']:
+        if 'custo_estimado' in dados_atualizacao and dados_atualizacao['custo_estimado'] is not None:
             try:
                 dados_atualizacao['custo_estimado'] = float(dados_atualizacao['custo_estimado'])
             except (ValueError, TypeError):
