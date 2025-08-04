@@ -20,7 +20,7 @@ class ProjetoBaseSchema(BaseModel):
     link_documentacao: Optional[str] = None
     data_inicio_prevista: Optional[str] = None
     data_fim_prevista: Optional[str] = None
-    custo_estimado: Optional[float] = Field(None, gt=0)
+    custo_estimado: Optional[float] = Field(None, ge=0)
     equipe_ids: Optional[List[int]] = Field(None, description="Lista de IDs dos usuários na equipe.")
     objetivo_ids: Optional[List[int]] = Field(None, description="Lista de IDs dos objetivos estratégicos.")
 
@@ -65,7 +65,7 @@ class ProjetoUpdateSchema(BaseModel):
     link_documentacao: Optional[str] = None
     data_inicio_prevista: Optional[str] = None
     data_fim_prevista: Optional[str] = None
-    custo_estimado: Optional[float] = Field(None, gt=0)
+    custo_estimado: Optional[float] = Field(None, ge=0)
     equipe_ids: Optional[List[int]] = Field(None, description="Lista de IDs dos usuários na equipe.")
     objetivo_ids: Optional[List[int]] = Field(None, description="Lista de IDs dos objetivos estratégicos.")
 

@@ -36,11 +36,12 @@ async function handleCreateFormSubmit(event, dependencies) {
         objetivo_ids: formData.getAll('objetivo_ids').map(id => parseInt(id))
     };
 
-    // Garante que o custo seja um número, se preenchido
-    if (data.custo_estimado) {
-        data.custo_estimado = parseFloat(data.custo_estimado);
+    // Garante que o custo seja um número, permitindo 0
+    if (data.custo_estimado !== undefined && data.custo_estimado !== '') {
+        const valor = parseFloat(data.custo_estimado);
+        data.custo_estimado = isNaN(valor) ? null : valor;
     } else {
-        delete data.custo_estimado;
+        data.custo_estimado = null;
     }
 
     // Lógica de limpeza para outros campos opcionais

@@ -69,10 +69,16 @@ async function handleEditFormSubmit(event, idDoProjeto, dependencies) {
         objetivo_ids: formData.getAll('objetivo_ids').map(id => parseInt(id))
     };
 
-    // Limpa chaves com valores vazios
+    // Limpa chaves com valores vazios e trata campos numéricos
     for (const key in data) {
-        if (!Array.isArray(data[key]) && data[key] === '') {
-            data[key] = null;
+        if (!Array.isArray(data[key])) {
+            if (data[key] === '') {
+                data[key] = null;
+            } else if (key === 'custo_estimado' && data[key] !== null) {
+                // Converte custo_estimado para número, permitindo 0
+                const valor = parseFloat(data[key]);
+                data[key] = isNaN(valor) ? null : valor;
+            }
         }
     }
 
