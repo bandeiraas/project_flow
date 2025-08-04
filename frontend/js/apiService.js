@@ -2,6 +2,41 @@
 import API_BASE_URL from './config.js';
 
 /**
+ * Função INTERNA para lidar com erros da API.
+ * Extrai informações úteis da resposta e cria um erro mais informativo.
+ */
+async function _handleApiError(response) {
+    let errorMessage = `Erro ${response.status}: ${response.statusText}`;
+    let errorDetails = null;
+
+    try {
+        // Tenta extrair detalhes do erro da resposta JSON
+        const errorData = await response.json();
+        if (errorData.detail) {
+            errorMessage = errorData.detail;
+        }
+        if (errorData.errors) {
+            errorDetails = errorData.errors;
+        }
+    } catch (e) {
+        // Se não conseguir ler JSON, usa a mensagem padrão
+        console.warn('[apiService] Não foi possível extrair detalhes do erro:', e);
+    }
+
+    // Cria um erro mais informativo
+    const error = new Error(errorMessage);
+    error.status = response.status;
+    error.statusText = response.statusText;
+    error.details = errorDetails;
+    error.response = response;
+
+    // Log do erro para debug
+    console.error(`[apiService] Erro da API (${response.status}):`, errorMessage, errorDetails);
+
+    throw error;
+}
+
+/**
  * Função genérica INTERNA para fazer requisições fetch.
  * Automaticamente adiciona o token de autenticação e lida com erros comuns.
  */
