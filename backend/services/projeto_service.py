@@ -103,15 +103,15 @@ class ProjetoService(BaseService):
         
         return self.execute_with_session(_generate_portfolio)
 
-    @with_db_session
-    def get_all_for_user(self, session, usuario: Usuario) -> List[Dict]:
+    def get_all_for_user(self, usuario: Usuario) -> List[Dict]:
         """
         Busca todos os projetos, aplicando as regras de permissão.
-        Refatorado para usar o decorator @with_db_session.
+        Este método utiliza a sessão gerenciada pelo contexto do serviço (with ProjetoService() as service:).
         """
         logger.info(f"Serviço: get_all_for_user para o usuário ID {usuario.id_usuario} ({usuario.role})")
         
-        todos_projetos = get_all_projetos(session)
+        # Utiliza a sessão da instância do serviço, que é gerenciada pelo context manager
+        todos_projetos = get_all_projetos(self.session)
 
         if usuario.role in ['Admin', 'Gerente']:
             projetos_visiveis = todos_projetos
@@ -307,4 +307,3 @@ class ProjetoService(BaseService):
             .all()
             
         return [p.para_dicionario() for p in projetos]          
-

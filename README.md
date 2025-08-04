@@ -92,22 +92,20 @@ O projeto foi desenvolvido com uma forte separação de responsabilidades entre 
 *   Node.js e `npm` (para o `live-server`).
 *   (Opcional, no Termux) Ferramentas de build: `pkg install rust clang make`.
 
-### 1. Backend
+### 1. Preparação do Ambiente (Executar na raiz do projeto)
 ```bash
-# Navegue até a pasta do backend
-cd backend
-
-# Crie e ative um ambiente virtual (altamente recomendado)
+# Crie e ative um ambiente virtual
 python -m venv .venv
 source .venv/bin/activate  # No Linux/macOS
 # .venv\Scripts\activate    # No Windows
 
 # Instale todas as dependências a partir do arquivo
-pip install -r ../requirements.txt
+pip install -r requirements.txt
 
 # Crie o arquivo .env na raiz do projeto (/workspaces/project_flow)
 # a partir do exemplo fornecido em backend/.env.example
 # e ajuste a JWT_SECRET_KEY.
+# Ex: cp backend/.env.example .env
 ```
 **Para executar o servidor:**
 ```bash

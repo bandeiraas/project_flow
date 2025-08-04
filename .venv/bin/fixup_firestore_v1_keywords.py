@@ -1,4 +1,4 @@
-#!/workspaces/project_flow/.venv/bin/python3
+#!/workspaces/project_flow/.venv/bin/python
 # -*- coding: utf-8 -*-
 # Copyright 2025 Google LLC
 #
