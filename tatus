@@ -1,0 +1,24 @@
+*   [33m119971d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Merge branch 'cursor/debug-api-auth-me-route-error-dc3f'
+[31m|[m[32m\[m  
+[31m|[m * [33mcb4cbda[m[33m ([m[1;32mcursor/debug-api-auth-me-route-error-dc3f[m[33m)[m Sua mensagem descritiva aqui
+[31m|[m[31m/[m  
+*   [33m1033633[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #3 from bandeiraas:cursor/debug-api-auth-me-route-error-dc3f
+[33m|[m[34m\[m  
+[33m|[m * [33m3feb336[m Fix app.py CORS configuration and add test endpoint - Restored port 5000 configuration - Improved CORS headers for GitHub Codespaces - Added test endpoint for server validation - Fixed OPTIONS requests for all endpoints
+[33m|[m * [33mc2f773e[m Refactor app.py to use application factory pattern with improved configuration
+[33m|[m * [33m4179ce2[m Refactor app.py: Simplify server setup and improve CORS configuration
+[33m|[m * [33mc3588e0[m Simplify CORS configuration and create simplified app entry point
+[33m|[m * [33m47aa748[m Enhance CORS, logging, and add debug print statements for development
+[33m|[m * [33m4930f4f[m Add /api/auth/me endpoint for user authentication verification
+[33m|[m * [33m8a946e9[m Improve Codespaces API URL detection in frontend config
+[33m|[m * [33mb31fe47[m Enhance CORS support for GitHub Codespaces and local development
+[33m|[m * [33m2bb9188[m Add comprehensive testing infrastructure for backend project
+* [34m|[m [33mb8cfee8[m Merge pull request #1 from bandeiraas/cursor/analise-e-sugira-melhorias-no-backend-2a69
+[35m|[m[34m\[m[34m|[m 
+[35m|[m * [33me045ab4[m Refactor database session management and enhance security utilities
+[35m|[m[35m/[m  
+* [33mc0e101b[m[33m ([m[1;31morigin/Cursor[m[33m)[m ajuste no upload
+*   [33mfb4a638[m Merge branch 'main' of https://github.com/bandeiraas/project_flow
+[1;31m|[m[1;32m\[m  
+[1;31m|[m * [33m6e45382[m Initial commit
+* [33m2470dff[m Commit inicial do projeto
