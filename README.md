@@ -89,23 +89,27 @@ O projeto foi desenvolvido com uma forte separação de responsabilidades entre 
 
 ### Pré-requisitos
 *   Python 3.8+ e `pip`.
-*   Node.js e `npm` (para o `live-server`).
-*   (Opcional, no Termux) Ferramentas de build: `pkg install rust clang make`.
+*   Node.js e `npm`.
 
-### 1. Preparação do Ambiente (Executar na raiz do projeto)
+### 1. Configuração do Ambiente
+Execute estes comandos na raiz do projeto para configurar tanto o backend quanto o frontend.
+
 ```bash
-# Crie e ative um ambiente virtual
+# a. Crie e ative o ambiente virtual do Python
 python -m venv .venv
 source .venv/bin/activate  # No Linux/macOS
 # .venv\Scripts\activate    # No Windows
 
-# Instale todas as dependências a partir do arquivo
+# b. Instale as dependências do Python
 pip install -r requirements.txt
 
-# Crie o arquivo .env na raiz do projeto (/workspaces/project_flow)
-# a partir do exemplo fornecido em backend/.env.example
-# e ajuste a JWT_SECRET_KEY.
-# Ex: cp backend/.env.example .env
+# c. Configure as variáveis de ambiente para o backend
+# Copie o arquivo de exemplo e ajuste a JWT_SECRET_KEY para um valor seguro.
+cp backend/.env.example .env
+
+# d. Instale o servidor de desenvolvimento para o frontend (globalmente)
+# (Você só precisa fazer isso uma vez)
+npm install -g live-server
 ```
 **Para executar o servidor:**
 ```bash
