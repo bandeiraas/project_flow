@@ -56,11 +56,11 @@ class Database:
                 self.app.logger.info("Banco de dados vazio. Populando com dados iniciais...")
                 
                 # Cria Usuários com papéis
-                user1 = Usuario(nome_completo="Ana Silva", email="ana.silva@email.com", cargo="Gerente de Projetos Sr.", role="Gerente")
+                user1 = Usuario(nome_completo="Ana Silva", email="ana.silva@email.com", cargo="Gerente de Projetos Sr.", role="GERENTE")
                 user1.definir_senha("senha123")
-                user2 = Usuario(nome_completo="Bruno Costa", email="bruno.costa@email.com", cargo="Arquiteto de Soluções", role="Membro")
+                user2 = Usuario(nome_completo="Bruno Costa", email="bruno.costa@email.com", cargo="Arquiteto de Soluções", role="MEMBRO")
                 user2.definir_senha("senha123")
-                user3 = Usuario(nome_completo="Carlos Lima", email="carlos.lima@email.com", cargo="Diretor de TI", role="Admin")
+                user3 = Usuario(nome_completo="Carlos Lima", email="carlos.lima@email.com", cargo="Diretor de TI", role="ADMIN")
                 user3.definir_senha("senha123")
                 session.add_all([user1, user2, user3])
                 session.commit()

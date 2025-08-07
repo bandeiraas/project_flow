@@ -3,7 +3,7 @@ from typing import Dict, List
 import datetime
 
 from extensions import db
-from models import Projeto, StatusLog, Usuario, ObjetivoEstrategico
+from models import Projeto, StatusLog, Usuario, ObjetivoEstrategico, ProjectStatus
 from models.usuario_model import Usuario
 from data_sources.sqlite_source import get_all_projetos, get_projeto_by_id
 from sqlalchemy.orm import joinedload
@@ -210,8 +210,14 @@ class ProjetoService(BaseService):
             if not projeto:
                 raise ValueError(f"Projeto com ID {id_projeto} não encontrado.")
 
+            # Converte a string novo_status para o enum ProjectStatus
+            try:
+                novo_status_enum = ProjectStatus(novo_status)
+            except ValueError:
+                raise ValueError(f"Status '{novo_status}' não é um status de projeto válido.")
+
             projeto.mudar_status(
-                novo_status=novo_status,
+                novo_status=novo_status_enum,
                 id_usuario=id_usuario,
                 observacao=observacao
             )
@@ -294,9 +300,9 @@ class ProjetoService(BaseService):
         Busca todos os projetos ativos onde um usuário específico é o responsável.
         """
         logger.info(f"Serviço: buscando projetos onde o usuário ID {id_usuario} é responsável.")
-        
-        # Status que indicam que um projeto não está mais "ativo"
-        status_finalizados = ["Pós GMUD", "Projeto concluído", "Cancelado"]
+
+        # Status que indicam que um projeto não está mais "ativo" (usando o Enum)
+        status_finalizados = [ProjectStatus.POS_GMUD, ProjectStatus.PROJETO_CONCLUIDO, ProjectStatus.CANCELADO]
         
         # Filtra os projetos pelo ID do responsável e que não estejam em um status final
         projetos = self.session.query(Projeto)\

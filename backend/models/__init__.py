@@ -10,6 +10,7 @@ from .projeto_model import Projeto, StatusLog
 from .homologacao_model import Homologacao
 from .tarefa_model import Tarefa
 from .objetivo_model import ObjetivoEstrategico
+from .enums import ProjectStatus
 
 # --- ADICIONE ESTAS IMPORTAÇÕES ---
 # Importa as tabelas de associação para que fiquem disponíveis no pacote 'models'

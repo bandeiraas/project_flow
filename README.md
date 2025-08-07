@@ -211,18 +211,46 @@ JWT_SECRET_KEY="sua-chave-secreta-super-forte-aqui"
 
 ---
 
+## 💡 Melhorias Sugeridas (Adicionadas pelo Gemini CLI)
+
+Esta seção lista melhorias potenciais identificadas durante a análise do projeto, visando otimização, escalabilidade e manutenibilidade.
+
+### Funcionalidades
+*   **Comentários e Discussões:** Permitir que usuários adicionem comentários e discussões diretamente em projetos e tarefas para facilitar a comunicação e o registro de decisões.
+*   **Notificações In-App:** Além das notificações por e-mail, implementar um sistema de notificações dentro da própria aplicação para alertar sobre atividades importantes (ex: tarefa atribuída, status de projeto alterado, novo comentário).
+*   **Anexos de Arquivos:** Capacidade de anexar arquivos (documentos, imagens, etc.) a projetos e tarefas, centralizando informações e referências.
+*   **Campos Personalizados:** Permitir que administradores configurem campos personalizados para projetos e/ou tarefas, tornando o sistema mais flexível para diferentes necessidades e tipos de projetos.
+*   **Exportação de Dados:** Funcionalidade para exportar dados de projetos, tarefas ou relatórios para formatos comuns (CSV, PDF), facilitando a análise offline ou a integração com outras ferramentas.
+*   **Pesquisa Global:** Implementar uma barra de pesquisa robusta que permita aos usuários encontrar rapidamente projetos, tarefas, usuários e outros itens em todo o sistema.
+
+### Frontend
+*   **Adoção de Framework Frontend:** Considerar a migração para um framework JavaScript moderno (e.g., React, Vue, Angular, Svelte) para otimizar o desenvolvimento de UI complexas, gerenciamento de estado e manutenibilidade a longo prazo.
+*   **Processo de Build para Produção:** Implementar um bundler (e.g., Webpack, Rollup, Vite) para otimizar o código frontend para produção (minificação, empacotamento, tree-shaking).
+
+### Backend
+*   **Log do Backend:** Garantir uma configuração de logging robusta e consistente em todo o backend para facilitar depuração e monitoramento.
+*   **Consistência no Tratamento de Erros:** Reforçar a consistência no tratamento de erros entre backend e frontend, fornecendo mensagens claras e padronizadas.
+*   **Escolha do Banco de Dados para Produção:** Para ambientes de produção, avaliar a migração de SQLite para um banco de dados mais robusto e escalável (e.g., PostgreSQL, MySQL).
+*   **Estratégia de Deploy:** Documentar e, se possível, implementar uma estratégia de deploy para ambientes de produção (e.g., Docker, plataformas de nuvem).
+
+### Geral
+*   **Documentação de Testes:** Expandir a documentação sobre a cobertura e execução dos testes automatizados.
+*   **Segurança:** Revisar e aprimorar as práticas de segurança, especialmente em relação a CORS e gerenciamento de segredos.
+
+---
+
 ## 🔮 Próximos Passos
 
 ### Funcionalidades
-*   [ ] **Página de Administração:** UI para gerenciar usuários e papéis.
+*   [x] **Página de Administração:** UI para gerenciar usuários e papéis.
 *   [ ] **Notificações por Email:** Enviar alertas sobre prazos e mudanças de status.
 
 ### Testes e Qualidade
-*   [ ] **Testes Automatizados:** Adicionar testes unitários e de integração para garantir a estabilidade.
+*   [x] **Testes Automatizados:** Adicionar testes unitários e de integração para garantir a estabilidade.
 
 ### Melhorias de Arquitetura e Refatoração (Backend)
-*   [ ] **Centralizar Gerenciamento de Sessão:** Usar hooks do Flask para gerenciar sessões do DB automaticamente, removendo código repetitivo das rotas.
-*   [ ] **Adotar Enums:** Substituir "magic strings" (ex: status, roles) por Enums para maior segurança e legibilidade do código.
+*   [x] **Centralizar Gerenciamento de Sessão:** Usar hooks do Flask para gerenciar sessões do DB automaticamente, removendo código repetitivo das rotas.
+*   [x] **Adotar Enums:** Substituir "magic strings" (ex: status, roles) por Enums para maior segurança e legibilidade do código.
 *   [ ] **Decoradores de Permissão:** Refatorar a lógica de verificação de permissões para decoradores personalizados (ex: `@permission_required`).
 *   [ ] **Configuração de CORS para Produção:** Tornar a política de CORS mais restritiva usando variáveis de ambiente.
 *   [ ] **Otimizar Reloader:** Configurar o reloader do Flask para ignorar a pasta `uploads` e melhorar a experiência de desenvolvimento.

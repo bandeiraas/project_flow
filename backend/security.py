@@ -4,6 +4,7 @@ from flask import abort
 from flask_jwt_extended import get_jwt_identity
 
 # Importa os modelos necessários para as verificações
+from models.enums import UserRole
 from models.usuario_model import Usuario
 from models.projeto_model import Projeto
 
@@ -49,23 +50,23 @@ class Permissions:
     @staticmethod
     def pode_criar_projeto(usuario: Usuario):
         """
-        REGRA: Membros, Gerentes e Admins podem criar projetos.
+        REGRA: Membros, Gerentes e ADMINS podem criar projetos.
         """
         if not usuario:
             return False
         # Se qualquer usuário logado pode criar, a regra é simples.
-        return usuario.role in ['Admin', 'Gerente', 'Membro']
+        return usuario.role in [UserRole.ADMIN, UserRole.GERENTE, UserRole.MEMBRO]
 
     @staticmethod
     def pode_ver_projeto(usuario: Usuario, projeto: Projeto):
         """
-        REGRA: Admins e Gerentes podem ver qualquer projeto.
+        REGRA: ADMINS e Gerentes podem ver qualquer projeto.
                Membros só podem ver os projetos dos quais são responsáveis.
         """
         if not usuario or not projeto:
             return False
         
-        if usuario.role in ['Admin', 'Gerente']:
+        if usuario.role in [UserRole.ADMIN, UserRole.GERENTE]:
             return True
         
         # Se for Membro, verifica se ele é o responsável
@@ -74,13 +75,13 @@ class Permissions:
     @staticmethod
     def pode_editar_projeto(usuario: Usuario, projeto: Projeto):
         """
-        REGRA: Admins e Gerentes podem editar qualquer projeto.
+        REGRA: ADMINS e Gerentes podem editar qualquer projeto.
                Membros só podem editar os projetos dos quais são responsáveis.
         """
         if not usuario or not projeto:
             return False
         
-        if usuario.role in ['Admin', 'Gerente']:
+        if usuario.role in [UserRole.ADMIN, UserRole.GERENTE]:
             return True
         
         return usuario.id_usuario == projeto.id_responsavel
@@ -88,13 +89,13 @@ class Permissions:
     @staticmethod
     def pode_deletar_projeto(usuario: Usuario, projeto: Projeto):
         """
-        REGRA: Admins e Gerentes podem deletar qualquer projeto.
+        REGRA: ADMINS e Gerentes podem deletar qualquer projeto.
                Membros só podem deletar os projetos dos quais são responsáveis.
         """
         if not usuario or not projeto:
             return False
         
-        if usuario.role in ['Admin', 'Gerente']:
+        if usuario.role in [UserRole.ADMIN, UserRole.GERENTE]:
             return True
         
         return usuario.id_usuario == projeto.id_responsavel
@@ -117,7 +118,7 @@ class Permissions:
         """
         if not usuario:
             return False
-        return usuario.role in ['Admin', 'Gerente']
+        return usuario.role in [UserRole.ADMIN, UserRole.GERENTE]
 
     @staticmethod
     def pode_editar_roles(usuario: Usuario):
@@ -126,4 +127,4 @@ class Permissions:
         """
         if not usuario:
             return False
-        return usuario.role == 'Admin'
+        return usuario.role == UserRole.ADMIN

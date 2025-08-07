@@ -1,7 +1,9 @@
+from sqlalchemy import Enum
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from werkzeug.security import generate_password_hash, check_password_hash
 from typing import Optional
 import datetime
+from .enums import UserRole
 
 # --- PONTO ÚNICO DE DEFINIÇÃO DA BASE DECLARATIVA ---
 # Todos os outros modelos importarão esta 'Base'.
@@ -15,8 +17,8 @@ class Usuario(Base):
     nome_completo: Mapped[str]
     email: Mapped[str] = mapped_column(unique=True)
     cargo: Mapped[str]
-    senha_hash: Mapped[str]
-    role: Mapped[str] = mapped_column(default='Membro')
+    senha_hash: Mapped[str]    
+    role: Mapped[UserRole] = mapped_column(Enum(UserRole), default=UserRole.MEMBRO)
     
     telefone: Mapped[Optional[str]]
     foto_perfil_url: Mapped[Optional[str]]

@@ -13,10 +13,10 @@ function renderUserList(usuarios) {
             <td>${user.email}</td>
             <td>${user.cargo}</td>
             <td>
-                <select class="role-select" data-user-id="${user.id_usuario}">
-                    <option value="Membro" ${user.role === 'Membro' ? 'selected' : ''}>Membro</option>
-                    <option value="Gerente" ${user.role === 'Gerente' ? 'selected' : ''}>Gerente</option>
-                    <option value="Admin" ${user.role === 'Admin' ? 'selected' : ''}>Admin</option>
+                <select class="role-select" data-user-id="${user.id_usuario}" data-original-role="${user.role}">
+                    <option value="MEMBRO" ${user.role === 'MEMBRO' ? 'selected' : ''}>Membro</option>
+                    <option value="GERENTE" ${user.role === 'GERENTE' ? 'selected' : ''}>Gerente</option>
+                    <option value="ADMIN" ${user.role === 'ADMIN' ? 'selected' : ''}>Admin</option>
                 </select>
             </td>
         `;
@@ -32,10 +32,12 @@ function renderUserList(usuarios) {
             try {
                 await api.updateUserRole(userId, newRole);
                 showToast(`Papel do usuário atualizado para ${newRole}.`, 'success');
+                // Atualiza o atributo originalRole após sucesso
+                event.target.dataset.originalRole = newRole;
             } catch (error) {
                 showToast(`Erro ao atualizar papel: ${error.message}`, 'error');
-                // Reverte a mudança visual em caso de erro
-                event.target.value = user.role; 
+                // Reverte a mudança visual em caso de erro usando o atributo originalRole
+                event.target.value = event.target.dataset.originalRole; 
             }
         });
     });
@@ -46,7 +48,7 @@ export function initializePage(dependencies) {
     const adminPanel = document.getElementById('admin-panel');
     const nonAdminMessage = document.getElementById('non-admin-message');
 
-    if (auth.getUser() && auth.getUser().role === 'Admin') {
+    if (auth.getUser() && auth.getUser().role === 'ADMIN') {
         adminPanel.style.display = 'block';
         nonAdminMessage.style.display = 'none';
 

@@ -1,11 +1,15 @@
 import datetime
+import logging
 from typing import List, Optional, Dict, TYPE_CHECKING
-from sqlalchemy import ForeignKey, Text, Table, Column, Float
+from sqlalchemy import ForeignKey, Text, Table, Column, Float, Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+logger = logging.getLogger(__name__)
 
 # Importa a Base e as classes que não causam ciclo
 from .usuario_model import Base, Usuario
 from .area_model import Area
+from .enums import ProjectStatus
 from .homologacao_model import Homologacao
 from .objetivo_model import ObjetivoEstrategico
 
@@ -32,7 +36,7 @@ class StatusLog(Base):
     
     id_log: Mapped[int] = mapped_column(primary_key=True)
     id_projeto: Mapped[int] = mapped_column(ForeignKey('projetos.id_projeto', ondelete="CASCADE"))
-    status: Mapped[str]
+    status: Mapped[ProjectStatus] = mapped_column(Enum(ProjectStatus))
     data: Mapped[str]
     id_usuario: Mapped[int] = mapped_column(ForeignKey('usuarios.id_usuario'))
     observacao: Mapped[str] = mapped_column(Text)
@@ -72,7 +76,7 @@ class Projeto(Base):
     data_fim_prevista: Mapped[Optional[str]]
     data_criacao: Mapped[str] = mapped_column(default=lambda: datetime.datetime.now(datetime.timezone.utc).isoformat())
     data_fim_real: Mapped[Optional[str]]
-    status_atual: Mapped[str] = mapped_column(default="Em Definição")
+    status_atual: Mapped[ProjectStatus] = mapped_column(Enum(ProjectStatus), default=ProjectStatus.EM_DEFINICAO)
     
     # --- RELACIONAMENTOS ---
     responsavel: Mapped[Optional[Usuario]] = relationship(foreign_keys=[id_responsavel], lazy='joined')
@@ -86,54 +90,47 @@ class Projeto(Base):
         cascade="all, delete-orphan",
         back_populates="projeto")
 
-    def get_proximos_status(self) -> List[str]:
+    def get_proximos_status(self) -> List[ProjectStatus]:
         """
         Retorna uma lista de próximos status válidos com base no status atual.
         """
-        STATUS_VALIDOS = [
-            "Em Definição", "Em Especificação", "Espeficação Aprovada", "Em Desenvolvimento", 
-            "Em Homologação", "Pendente de Implantação", "Pós GMUD", "Projeto concluído", "Cancelado"
-        ]
+        WORKFLOW = list(ProjectStatus)
         
         # Se o projeto já está em um estado final, não há próximos status.
-        if self.status_atual in ["Projeto concluído", "Cancelado"]:
+        if self.status_atual in [ProjectStatus.PROJETO_CONCLUIDO, ProjectStatus.CANCELADO]:
             return []
         
         try:
             # Encontra o índice do status atual na lista de fluxo de trabalho.
-            indice_atual = STATUS_VALIDOS.index(self.status_atual)
+            indice_atual = WORKFLOW.index(self.status_atual)
             
             # O próximo status é o item seguinte na lista.
-            proximos = [STATUS_VALIDOS[indice_atual + 1]]
+            proximos = [WORKFLOW[indice_atual + 1]]
             
             # Permite cancelar o projeto de qualquer etapa (exceto se já for o próximo passo).
-            if "Cancelado" not in proximos:
-                proximos.append("Cancelado")
+            if ProjectStatus.CANCELADO not in proximos:
+                proximos.append(ProjectStatus.CANCELADO)
                 
             return proximos
         except ValueError:
             # Caso o status atual não seja encontrado na lista (não deve acontecer).
             return []
 
-    def mudar_status(self, novo_status: str, id_usuario: int, observacao: str = ""):
+    def mudar_status(self, novo_status: ProjectStatus, id_usuario: int, observacao: str = ""):
         """
         Muda o status do projeto, validando a transição e adicionando um novo log ao histórico.
         """
-        STATUS_VALIDOS = [
-            "Em Definição", "Em Especificação", "Espeficação Aprovada", "Em Desenvolvimento", 
-            "Em Homologação", "Pendente de Implantação", "Pós GMUD", "Projeto concluído", "Cancelado"
-        ]
-        if novo_status not in STATUS_VALIDOS:
+        logger.debug(f"mudar_status recebido: tipo={type(novo_status)}, valor={novo_status}")
+        if not isinstance(novo_status, ProjectStatus):
             raise ValueError(f"Status '{novo_status}' não é válido.")
         
         # Status que podem ser visitados mais de uma vez (ciclos de retrabalho).
-        STATUS_CICLICOS = ["Em Desenvolvimento", "Em Homologação"]
+        STATUS_CICLICOS = [ProjectStatus.EM_DESENVOLVIMENTO, ProjectStatus.EM_HOMOLOGACAO]
 
         # A verificação de status repetido só se aplica se o novo status NÃO for cíclico.
         if novo_status not in STATUS_CICLICOS:
             if any(h.status == novo_status for h in self.historico_status):
                 raise ValueError(f"Projeto já passou pelo status '{novo_status}'.")
-
         # Atualiza o status principal do projeto.
         self.status_atual = novo_status
         
@@ -149,7 +146,7 @@ class Projeto(Base):
         self.historico_status.append(novo_log)
 
         # Se o projeto for concluído, registra a data de fim real.
-        if novo_status == "Projeto concluído":
+        if novo_status == ProjectStatus.PROJETO_CONCLUIDO:
             self.data_fim_real = novo_log.data
 
     def para_dicionario(self) -> Dict:

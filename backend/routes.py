@@ -2,6 +2,7 @@ import logging
 from flask import jsonify, abort, request, current_app
 from pydantic import ValidationError
 from sqlalchemy import inspect
+from werkzeug.exceptions import HTTPException
 
 # Importa as ferramentas de autenticação
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
@@ -10,6 +11,12 @@ import os
 
 # Importa os modelos
 from models import Projeto, Usuario, Area
+from pydantic import BaseModel
+from models.enums import UserRole
+
+class UserRoleUpdateSchema(BaseModel):
+    role: UserRole # Valida se o valor recebido é "Admin", "Gerente" ou "Membro"
+from models.enums import UserRole
 from models.objetivo_model import ObjetivoEstrategico
 
 # Importa as CLASSES de serviço e os schemas
@@ -34,6 +41,21 @@ logger = logging.getLogger(__name__)
 def register_routes(app):
     """Registra todas as rotas da API na instância do app Flask."""
 
+    # --- ERROR HANDLER GENÉRICO PARA ERROS HTTP ---
+    @app.errorhandler(HTTPException)
+    def handle_http_exception(e):
+        """Retorna respostas JSON para erros HTTP em vez do HTML padrão."""
+        # Cria um payload de erro JSON que o frontend pode entender
+        payload = {
+            "detail": e.description,
+            "errors": {
+                "code": e.code,
+                "name": e.name
+            }
+        }
+        # Retorna a resposta JSON com o código de status correto
+        return jsonify(payload), e.code
+
     # --- ROTAS DE AUTENTICAÇÃO (PÚBLICAS) ---
     @app.route("/api/auth/register", methods=['POST'])
     def register_user():
@@ -50,7 +72,7 @@ def register_routes(app):
                 nome_completo=dados['nome_completo'],
                 email=dados['email'],
                 cargo=dados.get('cargo', 'Usuário'),
-                role=dados.get('role', 'Membro')
+                role=dados.get('role', UserRole.MEMBRO)
             )
             novo_usuario.definir_senha(dados['senha'])
             

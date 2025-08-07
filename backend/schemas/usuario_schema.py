@@ -5,7 +5,7 @@ from typing import Optional, Literal
 class UserRoleUpdateSchema(BaseModel):
     """Schema para validar a atualização do papel de um usuário."""
     # Restringe o papel a apenas um dos valores válidos
-    role: Literal["Admin", "Gerente", "Membro"]
+    role: Literal["ADMIN", "GERENTE", "MEMBRO"]
     
 class ProfileUpdateSchema(BaseModel):
     """Schema para validar os dados que um usuário pode editar em seu próprio perfil."""

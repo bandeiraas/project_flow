@@ -233,28 +233,49 @@ async function handleEditTask(task, dependencies) {
     const modalHtmlContent = `<p>Editando a tarefa: <strong>${task.name}</strong></p><div class="form-group" style="text-align: left; margin-top: 1rem;"><label for="task-name">Nome da Tarefa</label><input type="text" id="task-name" class="modal-input" value="${task.name}" required></div><div class="form-group" style="text-align: left;"><label for="task-progress">Progresso (%)</label><input type="number" id="task-progress" class="modal-input" value="${task.progress}" min="0" max="100" required></div><div class="form-group" style="text-align: left;"><label for="id_responsavel_tarefa">Atribuir a</label><select id="id_responsavel_tarefa" class="modal-input">${optionsHtml}</select></div>`;
     const result = await dependencies.modal.show({ title: 'Editar Tarefa', htmlContent: modalHtmlContent, confirmText: 'Salvar Alterações', extraButton: { text: 'Excluir Tarefa', className: 'danger' } });
     if (result.confirmed === 'extra') { const deleteResult = await dependencies.modal.show({ title: 'Confirmar Exclusão', message: `Excluir a tarefa "${task.name}"?`, confirmText: 'Sim, Excluir' }); if (deleteResult.confirmed) { try { await api.deleteTarefa(task.id); showToast('Tarefa excluída!', 'success'); window.location.reload(); } catch (error) { showToast(`Erro: ${error.message}`, 'error'); } } return; }
-    if (result.confirmed) { const { modalContainer } = result; const data = { nome_tarefa: modalContainer.querySelector('#task-name').value, progresso: parseInt(modalContainer.querySelector('#task-progress').value), id_responsavel_tarefa: modalContainer.querySelector('#id_responsavel_tarefa').value }; if (data.id_responsavel_tarefa) { data.id_responsavel_tarefa = parseInt(data.id_responsavel_tarefa); } else { data.id_responsavel_tarefa = null; } if (!data.nome_tarefa || isNaN(data.progresso)) { showToast("Preencha os campos corretamente.", "error"); return; } try { await api.updateTarefa(task.id, data); showToast('Tarefa atualizada!', 'success'); window.location.reload(); } catch (error) { showToast(`Erro: ${error.message}`, 'error'); } }
+    if (result.confirmed) {
+        const { modalContainer } = result;
+        const data = {
+            nome_tarefa: modalContainer.querySelector('#task-name').value,
+            progresso: parseInt(modalContainer.querySelector('#task-progress').value),
+            id_responsavel_tarefa: modalContainer.querySelector('#id_responsavel_tarefa').value
+        };
+
+        if (data.id_responsavel_tarefa) {
+            data.id_responsavel_tarefa = parseInt(data.id_responsavel_tarefa);
+        } else {
+            data.id_responsavel_tarefa = null;
+        }
+
+        if (!data.nome_tarefa || isNaN(data.progresso)) {
+            showToast("Preencha os campos corretamente.", "error");
+            return;
+        }
+
+        try {
+            await api.updateTarefa(task.id, data);
+            showToast('Tarefa atualizada!', 'success');
+            window.location.reload();
+        } catch (error) {
+            showToast(`Erro: ${error.message}`, 'error');
+        }
+    }
 }
 
-// Em frontend/js/projeto.js
-
-// --- NOVO HANDLER PARA VER OS TESTES ---
 /**
- * Lida com o clique no botão "Ver Testes" de um ciclo de homologação.
- * Busca os detalhes dos testes e os exibe em um modal.
- * @param {string} idCiclo - O ID do ciclo de homologação.
+ * Busca e exibe os testes de um ciclo de homologação específico em um modal.
+ * @param {number} idCiclo - O ID do ciclo de homologação.
  * @param {object} dependencies - As dependências globais (modal).
  */
 async function handleViewTests(idCiclo, dependencies) {
-    showToast("Buscando detalhes dos testes...", "info");
     try {
-        // 1. Chama a nova API para buscar os testes do ciclo específico
+        // 1. Busca os dados dos testes na API
         const testes = await api.getTestesDoCiclo(idCiclo);
-        
-        // 2. Gera o HTML da tabela de testes
+
+        // 2. Constrói a tabela HTML com os resultados
         const tableHtml = `
-            <div class="table-wrapper" style="max-height: 60vh; overflow-y: auto;">
-                <table class="data-table compact">
+            <div class="table-wrapper">
+                <table class="data-table">
                     <thead>
                         <tr>
                             <th>Status</th>
@@ -289,8 +310,6 @@ async function handleViewTests(idCiclo, dependencies) {
         showToast(`Erro ao buscar detalhes dos testes: ${error.message}`, 'error');
     }
 }
-
-// ... (suas outras funções: handleStatusChange, handleDeleteProject, carregarDetalhesProjeto, etc.) ...
 
 /**
  * Lida com o clique no botão "Criar Tarefa" a partir de um teste reprovado.

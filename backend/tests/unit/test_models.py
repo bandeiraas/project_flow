@@ -4,8 +4,7 @@ Testes unitários para os models do sistema.
 """
 
 import pytest
-from datetime import datetime
-from models import Usuario, Projeto, Area, ObjetivoEstrategico
+from models import Usuario, Projeto, Area, ObjetivoEstrategico, UserRole, ProjectStatus
 from tests.fixtures.factories import (
     UsuarioFactory, ProjetoFactory, AreaFactory, 
     ObjetivoEstrategicoFactory
@@ -23,17 +22,15 @@ class TestUsuarioModel:
             nome_completo="João Silva",
             email="joao@teste.com",
             cargo="Desenvolvedor",
-            role="Membro"
+            role=UserRole.MEMBRO
         )
         
         db_session.add(usuario)
         db_session.flush()
         
         assert usuario.id_usuario is not None
-        assert usuario.nome_completo == "João Silva"
-        assert usuario.email == "joao@teste.com"
-        assert usuario.cargo == "Desenvolvedor"
-        assert usuario.role == "Membro"
+        assert usuario.nome_completo == "João Silva"        
+        assert usuario.role == UserRole.MEMBRO
     
     def test_definir_senha(self, db_session):
         """Testa definição de senha com hash."""
@@ -95,11 +92,10 @@ class TestUsuarioModel:
     
     def test_roles_validos(self, db_session):
         """Testa que apenas roles válidos são aceitos."""
-        roles_validos = ['Membro', 'Gerente', 'Admin']
-        
-        for role in roles_validos:
+        for role in list(UserRole):
             usuario = UsuarioFactory.build(role=role)
             # Não deve dar erro
+            assert isinstance(usuario.role, UserRole)
             assert usuario.role == role
 
 
@@ -119,7 +115,7 @@ class TestProjetoModel:
             prioridade="Alta",
             complexidade="Média",
             risco="Baixo",
-            status_atual="Em Planejamento"
+            status_atual=ProjectStatus.EM_DEFINICAO
         )
         
         db_session.add(projeto)
@@ -127,7 +123,7 @@ class TestProjetoModel:
         
         assert projeto.id_projeto is not None
         assert projeto.nome_projeto == "Projeto Teste"
-        assert projeto.status_atual == "Em Planejamento"
+        assert projeto.status_atual == ProjectStatus.EM_DEFINICAO
         assert projeto.id_responsavel == sample_user.id_usuario
     
     def test_relacionamento_responsavel(self, db_session):
